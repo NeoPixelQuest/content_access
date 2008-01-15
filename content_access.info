@@ -1,4 +1,0 @@
-; $Id$
-name = Content Access
-description = Provides flexible content access control
-package = Access control
