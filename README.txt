@@ -3,6 +3,7 @@ Content Access Module
 -----------------------
 by Wolfgang Ziegler, nuppla@zites.net
 
+<<<<<<< HEAD
 Yet another node access module.
 This module allows you to manage permissions for content types by role. It allows you to specifiy
 custom view, view own, edit, edit own, delete and delete own permissions for each content type.
@@ -63,3 +64,6 @@ Footnotes
 [1] Note that this overview can't take other modules into account, which might also alter node access.
     If you have multiple modules installed that alter node access, read the paragraph about "Running 
     multiple node access modules on a site".
+=======
+For the code have a look at the branches DRUPAL-5, ..
+>>>>>>> 12d1e2400e3d4936cac12671420c0e4fd1175ba1
