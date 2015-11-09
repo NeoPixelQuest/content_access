@@ -19,9 +19,8 @@ class ContentAccessController extends ControllerBase {
    * Returns content access settings page title.
    */
   public function getContentAccessTitle() {
-    $nid = \Drupal::routeMatch()->getParameter('node');
-    $node = Node::load($nid);
-    $title = t('Access control for <em>@title</em>', array('@title' => $node->getTitle()));
+    $node = \Drupal::routeMatch()->getParameter('node');
+    $title = t('Access control for <em>@title</em>', ['@title' => $node->getTitle()]);
 
     return $title;
   }

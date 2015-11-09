@@ -14,10 +14,11 @@ use Drupal\user\PermissionHandlerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Node Access settings form
+ * Node Access settings form.
  * @package Drupal\content_access\Form
  */
 class ContentAccessAdminSettingsForm extends FormBase {
+  use ContentAccessRoleBasedFormTrait;
 
   /**
    * The permission handler.
@@ -57,10 +58,9 @@ class ContentAccessAdminSettingsForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, $node_type = NULL) {
-
-    $storage = array(
+    $storage = [
       'node_type' => $node_type,
-    );
+    ];
 
     $form_state->setStorage($storage);
 
@@ -69,18 +69,17 @@ class ContentAccessAdminSettingsForm extends FormBase {
     foreach (_content_access_get_operations() as $op => $label) {
       $defaults[$op] = content_access_get_settings($op, $node_type);
     }
-    module_load_include('admin.inc', 'content_access');
-    content_access_role_based_form($form, $defaults, $node_type);
+
+    $this->roleBasedForm($form, $defaults, $node_type);
 
     // Per node:
     $form['node'] = array(
       '#type' => 'fieldset',
       '#title' => t('Per content node access control settings'),
       '#collapsible' => TRUE,
-      '#description' => t('Optionally you can enable per content node access control settings. If enabled, a new tab for the content access settings appears when viewing content. You have to configure permission to access these settings at the !permissions page.', array(
-          '!permissions' => \Drupal::l(t('permissions'), Url::fromRoute('user.admin_permissions')),
-        )
-      ),
+      '#description' => t('Optionally you can enable per content node access control settings. If enabled, a new tab for the content access settings appears when viewing content. You have to configure permission to access these settings at the @permissions page.', [
+        '@permissions' => \Drupal::l(t('permissions'), Url::fromRoute('user.admin_permissions')),
+      ]),
     );
     $form['node']['per_node'] = array(
       '#type' => 'checkbox',
@@ -121,7 +120,7 @@ class ContentAccessAdminSettingsForm extends FormBase {
     $node_type = $storage['node_type'];
 
     // Remove disabled modules permissions, so they can't raise exception
-    // in content_access_save_permissions()
+    // in ::savePermissions().
     foreach ($roles_permissions as $rid => $role_permissions) {
       foreach ($role_permissions as $permission => $value) {
         if (!array_key_exists($permission, $permissions)) {
@@ -130,7 +129,7 @@ class ContentAccessAdminSettingsForm extends FormBase {
       }
     }
 
-    foreach (array('update', 'update_own', 'delete', 'delete_own') as $op) {
+    foreach (['update', 'update_own', 'delete', 'delete_own'] as $op) {
       foreach ($values[$op] as $rid => $value) {
         $permission = content_access_get_permission_by_op($op, $node_type);
         if ($value) {
@@ -144,7 +143,8 @@ class ContentAccessAdminSettingsForm extends FormBase {
       // always.
       unset($values[$op]);
     }
-    content_access_save_permissions($roles_permissions);
+
+    $this->savePermissions($roles_permissions);
 
     // Update content access settings
     $settings = content_access_get_settings('all', $node_type);
@@ -168,7 +168,7 @@ class ContentAccessAdminSettingsForm extends FormBase {
         _content_access_remove_acls($node_type);
       }
 
-      if (content_access_mass_update(array($node_type))) {
+      if (content_access_mass_update([$node_type])) {
         $node_types = node_type_get_names();
         drupal_set_message(t('Permissions have been successfully rebuilt for the content type @types.', array('@types' => $node_types[$node_type])));
       }
@@ -176,4 +176,14 @@ class ContentAccessAdminSettingsForm extends FormBase {
 
     drupal_set_message(t('Your changes have been saved.'));
   }
+
+  /**
+   * Saves the given permissions by role to the database.
+   */
+  protected function savePermissions($roles_permissions) {
+    foreach ($roles_permissions as $rid => $permissions) {
+      user_role_change_permissions($rid, $permissions);
+    }
+  }
+
 }

@@ -26,8 +26,7 @@ class ContentAccessNodePageAccessCheck implements AccessInterface {
    * {@inhericdoc}
    */
   public function access(AccountInterface $account, RouteMatchInterface $route_match) {
-    $nid = $route_match->getParameter('node');
-    $node = Node::load($nid);
+    $node = $route_match->getParameter('node');
     $all_nodes_access = $account->hasPermission('grant content access');
     $own_node_access = $account->hasPermission('grant own content access') && ($account->id() == $node->getOwnerId());
 
