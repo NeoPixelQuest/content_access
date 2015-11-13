@@ -548,7 +548,7 @@ function content_access_optimize_grants(&$grants, NodeInterface $node) {
   foreach ($grants as $key => $grant) {
     foreach (['view', 'update', 'delete'] as $op) {
       if (!empty($grant['grant_' . $op])) {
-        $rids[$op][] = $key;
+        $rids[$op][] = $grant['gid'];
       }
     }
   }
@@ -584,7 +584,7 @@ function content_access_optimize_grants(&$grants, NodeInterface $node) {
     }
 
     foreach (['view', 'update', 'delete'] as $op) {
-      if ($grant['grant_' . $op] && in_array($key, $rids[$op])) {
+      if ($grant['grant_' . $op] && in_array($grant['gid'], $rids[$op])) {
         //it's still here, so we can't remove this grant.
         continue 2;
       }
