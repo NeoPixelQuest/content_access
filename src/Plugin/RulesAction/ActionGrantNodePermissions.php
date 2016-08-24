@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\content_access\Plugin\RulesAction\ActionGrantNodePermissions.
- */
-
 namespace Drupal\content_access\Plugin\RulesAction;
 
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;

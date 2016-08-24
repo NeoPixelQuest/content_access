@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\content_access\Form\ContentAccessPageForm.
- */
-
 namespace Drupal\content_access\Form;
 
 use Drupal\Core\Form\FormBase;

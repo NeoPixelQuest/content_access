@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains Drupal\content_access\Tests\ContentAccessModuleTestCase.
- */
-
 namespace Drupal\content_access\Tests;
 
 /**

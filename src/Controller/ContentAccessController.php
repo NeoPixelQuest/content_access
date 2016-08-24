@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\content_access\Controller\ContentAccessController.
- */
-
 namespace Drupal\content_access\Controller;
 
 use Drupal\Core\Controller\ControllerBase;

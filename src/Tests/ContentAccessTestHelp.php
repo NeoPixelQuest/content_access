@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains Drupal\content_access\Tests\ContentAccessTestHelp.
- */
-
 namespace Drupal\content_access\Tests;
 
 use Drupal\Core\Session\AccountInterface;

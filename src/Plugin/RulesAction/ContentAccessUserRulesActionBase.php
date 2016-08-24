@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\content_access\Plugin\RulesAction\ContentAccessUserRulesActionBase.
- */
-
 namespace Drupal\content_access\Plugin\RulesAction;
 
 use Drupal\Core\Database\Connection;

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\content_access\Plugin\Deriver\RulesActionUserAclDeriver.
- */
-
 namespace Drupal\rules\Plugin\Deriver;
 
 use Drupal\Component\Plugin\Derivative\DeriverBase;

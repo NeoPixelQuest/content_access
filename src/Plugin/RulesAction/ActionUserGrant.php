@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\content_access\Plugin\RulesAction\ActionUserGrant.
- */
-
 namespace Drupal\content_access\Plugin\RulesAction;
 
 /**

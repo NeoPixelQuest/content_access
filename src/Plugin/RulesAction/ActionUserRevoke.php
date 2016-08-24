@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\content_access\Plugin\RulesAction\ActionUserRevoke.
- */
-
 namespace Drupal\content_access\Plugin\RulesAction;
 
 /**

@@ -1,11 +1,5 @@
 <?php
 
-
-/**
- * @file
- * Contains Drupal\content_access\Access\ContentAccessAdminSettingsAccessCheck.
- */
-
 namespace Drupal\content_access\Access;
 
 use Drupal\Core\Routing\Access\AccessInterface;

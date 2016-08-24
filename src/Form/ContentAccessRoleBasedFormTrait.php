@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\content_access\Form\ContentAccessRoleBasedFormTrait.
- */
-
 namespace Drupal\content_access\Form;
 
 use Drupal\user\Entity\Role;

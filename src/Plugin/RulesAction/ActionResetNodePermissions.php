@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\content_access\Plugin\RulesAction\ActionResetNodePermissions.
- */
-
 namespace Drupal\content_access\Plugin\RulesAction;
 
 use Drupal\rules\Core\RulesActionBase;
