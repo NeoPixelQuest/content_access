@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\rules\Plugin\Deriver;
+namespace Drupal\content_access\Plugin\Deriver;
 
 use Drupal\Component\Plugin\Derivative\DeriverBase;
 use Drupal\Core\Extension\ModuleHandlerInterface;

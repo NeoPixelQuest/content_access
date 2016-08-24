@@ -16,20 +16,20 @@ namespace Drupal\content_access\Plugin\RulesAction;
  *     ),
  *     "content_access_user_view" = @ContextDefinition("entity:user",
  *       label = @Translation("Grant view access"),
- *       description = @Translation("Grant view access to the following user.")
+ *       description = @Translation("Grant view access to the following user."),
  *       required = FALSE
  *     ),
  *     "content_access_user_update" = @ContextDefinition("entity:user",
  *       label = @Translation("Grant edit access"),
- *       description = @Translation("Grant edit access to the following user.")
+ *       description = @Translation("Grant edit access to the following user."),
  *       required = FALSE
  *     ),
  *     "content_access_user_delete" = @ContextDefinition("entity:user",
  *       label = @Translation("Grant delete access"),
- *       description = @Translation("Grant delete access to the following user.")
+ *       description = @Translation("Grant delete access to the following user."),
  *       required = FALSE
  *     )
- *   }
+ *   },
  *   deriver = "\Drupal\content_access\Plugin\Deriver\RulesActionUserAclDeriver"
  * )
 
