@@ -48,7 +48,7 @@ trait ActionCommonTrait {
    * Apply the new grants to the affected node.
    */
   protected function aquireGrants(NodeInterface $node) {
-    \Drupal::entityManager()->getAccessControlHandler('node')->writeGrants($node);
+    \Drupal::entityTypeManager()->getAccessControlHandler('node')->writeGrants($node);
   }
 
   /**

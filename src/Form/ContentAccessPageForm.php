@@ -132,7 +132,7 @@ class ContentAccessPageForm extends FormBase {
     }
 
     // Apply new settings.
-    \Drupal::entityManager()->getAccessControlHandler('node')->writeGrants($node);
+    \Drupal::entityTypeManager()->getAccessControlHandler('node')->writeGrants($node);
     \Drupal::moduleHandler()->invokeAll('per_node', $settings);
 
     foreach (Cache::getBins() as $service_id => $cache_backend) {
@@ -181,7 +181,7 @@ class ContentAccessPageForm extends FormBase {
   function pageResetSubmit(array &$form, FormStateInterface $form_state) {
     $storage = $form_state->getStorage();
     content_access_delete_per_node_settings($storage['node']);
-    \Drupal::entityManager()->getAccessControlHandler('node')->writeGrants($storage['node']);
+    \Drupal::entityTypeManager()->getAccessControlHandler('node')->writeGrants($storage['node']);
 
     drupal_set_message(t('The permissions have been reseted to the content type defaults.'));
   }
