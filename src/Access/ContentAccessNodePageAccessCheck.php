@@ -5,10 +5,7 @@ namespace Drupal\content_access\Access;
 use Drupal\Core\Routing\Access\AccessInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Access\AccessResult;
-use Drupal\node\Entity\Node;
 use Drupal\Core\Routing\RouteMatchInterface;
-use Symfony\Component\Routing\Route;
-
 
 /**
  * Determines access to routes based on permissions defined via
@@ -17,7 +14,7 @@ use Symfony\Component\Routing\Route;
 class ContentAccessNodePageAccessCheck implements AccessInterface {
 
   /**
-   * {@inhericdoc}
+   * {@inheritdoc}
    */
   public function access(AccountInterface $account, RouteMatchInterface $route_match) {
     $node = $route_match->getParameter('node');

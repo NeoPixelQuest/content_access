@@ -11,10 +11,10 @@ use Drupal\Core\Cache\Cache;
 use Drupal\Core\Session\AccountInterface;
 
 /**
- * Node Access settings form
- * @package Drupal\content_access\Form
+ * Node Access settings form.
  */
 class ContentAccessPageForm extends FormBase {
+
   use ContentAccessRoleBasedFormTrait;
 
   /**

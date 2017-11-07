@@ -1,4 +1,3 @@
-
 Content Access Module
 -----------------------
 by Wolfgang Ziegler, nuppla@zites.net

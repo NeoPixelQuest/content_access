@@ -10,9 +10,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Node Access settings form.
- * @package Drupal\content_access\Form
  */
 class ContentAccessAdminSettingsForm extends FormBase {
+
   use ContentAccessRoleBasedFormTrait;
 
   /**

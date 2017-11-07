@@ -39,7 +39,7 @@ trait ContentAccessRoleBasedFormTrait {
       $roles[$role->id()] = $role->get('label');
     }
     foreach ($operations as $op => $label) {
-      // Make sure defaults are set properly
+      // Make sure defaults are set properly.
       $defaults += [$op => []];
 
       $form['per_role'][$op] = [

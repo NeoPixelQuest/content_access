@@ -15,7 +15,7 @@ use Drupal\node\Entity\NodeType;
 class ContentAccessAdminSettingsAccessCheck implements AccessInterface {
 
   /**
-   * {@inhericdoc}
+   * {@inheritdoc}
    */
   public function access(AccountInterface $account, RouteMatchInterface $route_match) {
     $node_type_id = $route_match->getParameter('node_type');
