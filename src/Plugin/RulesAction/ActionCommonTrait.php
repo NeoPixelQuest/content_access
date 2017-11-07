@@ -34,7 +34,7 @@ trait ActionCommonTrait {
    * Transforms the array of text values to an array keyed by $op and $rid.
    */
   protected function transformRulesValue($value) {
-    $array = array();
+    $array = [];
     foreach ($value as $op_role) {
       $parts = explode(':', $op_role);
       // The first item is $op and the second $rid.
@@ -56,7 +56,7 @@ trait ActionCommonTrait {
    */
   protected function actionUser(array $params, $type) {
     $ops = ['view', 'update', 'delete'];
-    $settings = array();
+    $settings = [];
     $node = $params['node'];
 
     foreach ($ops as $op) {
@@ -76,10 +76,10 @@ trait ActionCommonTrait {
 
       if ($type == 'grant') {
         $this->database->insert('acl_user')
-          ->fields(array(
+          ->fields([
             'acl_id' => $acl_id,
             'uid' => $uid,
-          ))
+          ])
           ->execute();
       }
     }

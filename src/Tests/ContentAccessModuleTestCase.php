@@ -228,18 +228,18 @@ class ContentAccessModuleTestCase extends ContentAccessTestHelp {
     $this->drupalLogin($this->test_user);
     $this->drupalPostForm(
       'node/' . $this->node1->id() . '/delete',
-      array(),
+      [],
       'Delete'
     );
     $this->assertRaw(
-      t('%node has been deleted', array('%node' => $this->node1->getTitle())),
+      t('%node has been deleted', ['%node' => $this->node1->getTitle()]),
       'Test node was deleted successfully by test user'
     );
 
     // Login admin and recreate test node1.
     $this->drupalLogin($this->admin_user);
     $this->node1 = $this->drupalCreateNode(
-      array('type' => $this->content_type->id())
+      ['type' => $this->content_type->id()]
     );
 
     // Enable per node access.

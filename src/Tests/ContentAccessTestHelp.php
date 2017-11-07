@@ -85,7 +85,7 @@ class ContentAccessTestHelp extends WebTestBase {
    * for the role of the user.
    */
   function changeAccessContentTypeKeyword($keyword, $access = TRUE, AccountInterface $user = NULL) {
-    $roles = array();
+    $roles = [];
 
     if ($user === NULL) {
       $role = Role::load($this->rid);

@@ -13,11 +13,11 @@ class ContentAccessAclTestCase extends ContentAccessTestHelp {
    * Implementation of getInfo() for information.
    */
   public static function getInfo() {
-    return array(
+    return [
       'name' => t('Content Access Module with ACL Module Tests'),
       'description' => t('Various tests to check the combination of content access and ACL module.'),
       'group' => 'Content Access',
-    );
+    ];
   }
 
   /**
@@ -59,7 +59,7 @@ class ContentAccessAclTestCase extends ContentAccessTestHelp {
       'acl[view][add]' => $this->test_user->getUsername(),
     ];
     $this->drupalPostForm('node/'. $this->node1->id() .'/access', $edit, t('Add User'));
-    $this->drupalPostForm(NULL, array(), t('Submit'));
+    $this->drupalPostForm(NULL, [], t('Submit'));
 
     // Logout admin, try to access the node anonymously.
     $this->drupalLogout();
@@ -104,7 +104,7 @@ class ContentAccessAclTestCase extends ContentAccessTestHelp {
       'acl[update][add]' => $this->test_user->getUsername(),
     ];
     $this->drupalPostForm('node/' . $this->node1->id() .'/access', $edit, t('Add User'));
-    $this->drupalPostForm(NULL, array(), t('Submit'));
+    $this->drupalPostForm(NULL, [], t('Submit'));
 
     // Logout admin, try to edit the node anonymously.
     $this->drupalLogout();
@@ -145,11 +145,11 @@ class ContentAccessAclTestCase extends ContentAccessTestHelp {
     $this->changeAccessPerNode();
 
     // Allow delete access for test user.
-    $edit = array(
+    $edit = [
       'acl[delete][add]' => $this->test_user->getUsername(),
-    );
+    ];
     $this->drupalPostForm('node/' . $this->node1->id() .'/access', $edit, t('Add User'));
-    $this->drupalPostForm(NULL, array(), t('Submit'));
+    $this->drupalPostForm(NULL, [], t('Submit'));
 
     // Logout admin, try to delete the node anonymously.
     $this->drupalLogout();

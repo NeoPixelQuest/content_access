@@ -60,7 +60,7 @@ class ContentAccessAdminSettingsForm extends FormBase {
     $form_state->setStorage($storage);
 
     // Add role based per content type settings
-    $defaults = array();
+    $defaults = [];
     foreach (_content_access_get_operations() as $op => $label) {
       $defaults[$op] = content_access_get_settings($op, $node_type);
     }
@@ -68,37 +68,37 @@ class ContentAccessAdminSettingsForm extends FormBase {
     $this->roleBasedForm($form, $defaults, $node_type);
 
     // Per node:
-    $form['node'] = array(
+    $form['node'] = [
       '#type' => 'fieldset',
       '#title' => t('Per content node access control settings'),
       '#collapsible' => TRUE,
       '#description' => t('Optionally you can enable per content node access control settings. If enabled, a new tab for the content access settings appears when viewing content. You have to configure permission to access these settings at the @permissions page.', [
         '@permissions' => \Drupal::l(t('permissions'), Url::fromRoute('user.admin_permissions')),
       ]),
-    );
-    $form['node']['per_node'] = array(
+    ];
+    $form['node']['per_node'] = [
       '#type' => 'checkbox',
       '#title' => t('Enable per content node access control settings'),
       '#default_value' => content_access_get_settings('per_node', $node_type),
-    );
+    ];
 
-    $form['advanced'] = array(
+    $form['advanced'] = [
       '#type' => 'fieldset',
       '#title' => t('Advanced'),
       '#collapsible' => TRUE,
       '#collapsed' => TRUE,
-    );
-    $form['advanced']['priority'] = array(
+    ];
+    $form['advanced']['priority'] = [
       '#type' => 'weight',
       '#title' => t('Give content node grants priority'),
       '#default_value' => content_access_get_settings('priority', $node_type),
       '#description' => t('If you are only using this access control module, you can safely ignore this. If you are using multiple access control modules you can adjust the priority of this module.'),
-    );
-    $form['submit'] = array(
+    ];
+    $form['submit'] = [
       '#type' => 'submit',
       '#value' => t('Submit'),
       '#weight' => 10,
-    );
+    ];
 
     return $form;
   }
@@ -165,7 +165,7 @@ class ContentAccessAdminSettingsForm extends FormBase {
 
       if (content_access_mass_update([$node_type])) {
         $node_types = node_type_get_names();
-        drupal_set_message(t('Permissions have been successfully rebuilt for the content type @types.', array('@types' => $node_types[$node_type])));
+        drupal_set_message(t('Permissions have been successfully rebuilt for the content type @types.', ['@types' => $node_types[$node_type]]));
       }
     }
 

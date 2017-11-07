@@ -28,7 +28,7 @@ class ContentAccessPageForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, NodeInterface $node = NULL) {
-    $defaults = array();
+    $defaults = [];
 
     foreach (_content_access_get_operations() as $op => $label) {
       $defaults[$op] = content_access_per_node_setting($op, $node);
@@ -37,10 +37,10 @@ class ContentAccessPageForm extends FormBase {
     $this->roleBasedForm($form, $defaults, $node->getType());
     foreach (Element::children($form['per_role']) as $op) {
       if (!empty($form['per_role'][$op]['#type']) && $form['per_role'][$op]['#type'] == 'checkboxes') {
-        $form['per_role'][$op]['#process'] = array(
-          array('\Drupal\Core\Render\Element\Checkboxes', 'processCheckboxes'),
-          array('\Drupal\content_access\Form\ContentAccessPageForm', 'disableCheckboxes'),
-        );
+        $form['per_role'][$op]['#process'] = [
+          ['\Drupal\Core\Render\Element\Checkboxes', 'processCheckboxes'],
+          ['\Drupal\content_access\Form\ContentAccessPageForm', 'disableCheckboxes'],
+        ];
       }
     }
 
@@ -58,13 +58,13 @@ class ContentAccessPageForm extends FormBase {
     // ACL form.
     if (\Drupal::moduleHandler()->moduleExists('acl')) {
       // This is disabled when there is no node passed.
-      $form['acl'] = array(
+      $form['acl'] = [
         '#type' => 'fieldset',
         '#title' => t('User access control lists'),
         '#description' => t('These settings allow you to grant access to specific users.'),
         '#collapsible' => TRUE,
         '#tree' => TRUE,
-      );
+      ];
 
       foreach (['view', 'update', 'delete'] as $op) {
         $acl_id = content_access_get_acl_id($node, $op);
@@ -83,18 +83,18 @@ class ContentAccessPageForm extends FormBase {
     $storage['node'] = $node;
     $form_state->setStorage($storage);
 
-    $form['reset'] = array(
+    $form['reset'] = [
       '#type' => 'submit',
       '#value' => t('Reset to defaults'),
       '#weight' => 10,
       '#submit' => ['::pageResetSubmit'],
       '#access' => !empty(content_access_get_per_node_settings($node)),
-    );
-    $form['submit'] = array(
+    ];
+    $form['submit'] = [
       '#type' => 'submit',
       '#value' => t('Submit'),
       '#weight' => 10,
-    );
+    ];
 
     // @todo not true anymore?
     // http://drupal.org/update/modules/6/7#hook_node_access_records
@@ -109,7 +109,7 @@ class ContentAccessPageForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $settings = array();
+    $settings = [];
     $storage = $form_state->getStorage();
     $values = $form_state->getValues();
     $node = $storage['node'];
@@ -124,7 +124,7 @@ class ContentAccessPageForm extends FormBase {
     content_access_save_per_node_settings($node, $settings);
 
     if (\Drupal::moduleHandler()->moduleExists('acl')) {
-      foreach (array('view', 'update', 'delete') as $op) {
+      foreach (['view', 'update', 'delete'] as $op) {
         $values = $form_state->getValues();
         acl_save_form($values['acl'][$op]);
         \Drupal::moduleHandler()->invokeAll('user_acl', $settings);

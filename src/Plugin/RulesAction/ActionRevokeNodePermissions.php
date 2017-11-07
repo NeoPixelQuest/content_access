@@ -67,9 +67,9 @@ class ActionRevokeNodePermissions extends RulesActionBase implements ContainerFa
       // Transform the value to the content-access format.
       $settings = $this->transformRulesValue($permissions);
 
-      $ca_settings = array();
+      $ca_settings = [];
       foreach (_content_access_get_operations() as $op => $label) {
-        $settings += array($op => array());
+        $settings += [$op => []];
         $ca_settings[$op] = array_diff(content_access_per_node_setting($op, $node), $settings[$op]);
       }
       content_access_save_per_node_settings($node, $ca_settings);
