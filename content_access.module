@@ -168,8 +168,9 @@ function content_access_entity_delete(EntityInterface $entity) {
   if ($entity instanceof RoleInterface) {
     $roles_gids = $config->get('content_access_roles_gids');
     unset($roles_gids[$entity->id()]);
-    $config->set('content_access_roles_gids', $roles_gids);
-    $config->save();
+    $config
+      ->set('content_access_roles_gids', $roles_gids)
+      ->save();
   }
 }
 
@@ -593,8 +594,9 @@ function content_access_optimize_grants(&$grants, NodeInterface $node) {
 function content_access_node_type_delete(NodeTypeInterface $info) {
   $config = \Drupal::configFactory()->getEditable('content_access.settings');
 
-  $config->delete('content_access_node_type.' . $info->id());
-  $config->save();
+  $config
+    ->clear('content_access_node_type.' . $info->id())
+    ->save();
 }
 
 /**
@@ -609,8 +611,9 @@ function content_access_node_type_update(NodeTypeInterface $info) {
   if (!empty($original_id) && $info->getOriginalId() != $info->id()) {
     $settings = content_access_get_settings('all', $info->getOriginalId());
     content_access_set_settings($settings, $info->id());
-    $config->delete('content_access_node_type.' . $info->getOriginalId());
-    $config->save();
+    $config
+      ->clear('content_access_node_type.' . $info->getOriginalId())
+      ->save();
   }
 }
 

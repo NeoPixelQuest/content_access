@@ -21,8 +21,9 @@ function content_access_install() {
     $i++;
   }
 
-  $config->set('content_access_roles_gids', array_flip($roles_gids));
-  $config->save();
+  $config
+    ->set('content_access_roles_gids', array_flip($roles_gids))
+    ->save();
 }
 
 /**
