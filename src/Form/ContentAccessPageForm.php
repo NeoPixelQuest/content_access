@@ -183,7 +183,7 @@ class ContentAccessPageForm extends FormBase {
     content_access_delete_per_node_settings($storage['node']);
     \Drupal::entityTypeManager()->getAccessControlHandler('node')->writeGrants($storage['node']);
 
-    drupal_set_message(t('The permissions have been reseted to the content type defaults.'));
+    drupal_set_message(t('The permissions have been reset to the content type defaults.'));
   }
 
 
