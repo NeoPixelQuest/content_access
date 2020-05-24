@@ -368,7 +368,7 @@ function content_access_proccess_grant($grant, $gid, NodeInterface $node) {
  * @param $any_roles
  *   The roles with which anybody has access (not optimized!).
  * @param $own_roles
- *   The roles with which only the author has acess (optimized!).
+ *   The roles with which only the author has access (optimized!).
  * @return int
  */
 function content_access_own_op(NodeInterface $node, $any_roles, $own_roles) {
