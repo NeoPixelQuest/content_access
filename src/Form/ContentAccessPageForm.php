@@ -12,9 +12,9 @@ use Drupal\Core\Session\AccountInterface;
 
 /**
  * Node Access settings form.
+ * @package Drupal\content_access\Form
  */
 class ContentAccessPageForm extends FormBase {
-
   use ContentAccessRoleBasedFormTrait;
 
   /**
@@ -99,7 +99,7 @@ class ContentAccessPageForm extends FormBase {
     // @todo not true anymore?
     // http://drupal.org/update/modules/6/7#hook_node_access_records
     if (!$node->isPublished()) {
-      drupal_set_message(t("Warning: Your content is not published, so this settings are not taken into account as long as the content remains unpublished."), 'error');
+      $this->messenger()->addError(t("Warning: Your content is not published, so this settings are not taken into account as long as the content remains unpublished."));
     }
 
     return $form;
@@ -124,7 +124,7 @@ class ContentAccessPageForm extends FormBase {
     content_access_save_per_node_settings($node, $settings);
 
     if (\Drupal::moduleHandler()->moduleExists('acl')) {
-      foreach (['view', 'update', 'delete'] as $op) {
+      foreach (array('view', 'update', 'delete') as $op) {
         $values = $form_state->getValues();
         acl_save_form($values['acl'][$op]);
         \Drupal::moduleHandler()->invokeAll('user_acl', $settings);
@@ -132,14 +132,14 @@ class ContentAccessPageForm extends FormBase {
     }
 
     // Apply new settings.
-    \Drupal::entityTypeManager()->getAccessControlHandler('node')->writeGrants($node);
+    \Drupal::entityManager()->getAccessControlHandler('node')->writeGrants($node);
     \Drupal::moduleHandler()->invokeAll('per_node', $settings);
 
     foreach (Cache::getBins() as $service_id => $cache_backend) {
       $cache_backend->deleteAll();
     }
 
-    drupal_set_message(t('Your changes have been saved.'));
+    $this->messenger()->addMessage(t('Your changes have been saved.'));
   }
 
   /**
@@ -181,9 +181,9 @@ class ContentAccessPageForm extends FormBase {
   function pageResetSubmit(array &$form, FormStateInterface $form_state) {
     $storage = $form_state->getStorage();
     content_access_delete_per_node_settings($storage['node']);
-    \Drupal::entityTypeManager()->getAccessControlHandler('node')->writeGrants($storage['node']);
+    \Drupal::entityManager()->getAccessControlHandler('node')->writeGrants($storage['node']);
 
-    drupal_set_message(t('The permissions have been reset to the content type defaults.'));
+    $this->messenger()->addMessage(t('The permissions have been reseted to the content type defaults.'));
   }
 
 

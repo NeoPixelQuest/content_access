@@ -2,23 +2,28 @@
 
 namespace Drupal\content_access\Tests;
 
+use Drupal\Core\Session\AccountInterface;
+use Drupal\simpletest\WebTestBase;
+
 /**
  * Automated SimpleTest Case for using content access module with acl module.
  *
  * @group Access
  */
-class ContentAccessAclTestCase extends ContentAccessTestHelp {
+class ContentAccessAclTestCase extends WebTestBase {
+  use ContentAccessTestHelperTrait;
 
   /**
-   * Implementation of getInfo() for information.
+   * Modules to enable.
+   *
+   * @var array
    */
-  public static function getInfo() {
-    return [
-      'name' => t('Content Access Module with ACL Module Tests'),
-      'description' => t('Various tests to check the combination of content access and ACL module.'),
-      'group' => 'Content Access',
-    ];
-  }
+  public static $modules = ['content_access', 'acl'];
+
+  protected $test_user;
+  protected $admin_user;
+  protected $content_type;
+  protected $node1;
 
   /**
    * Setup configuration before each test.
@@ -30,6 +35,36 @@ class ContentAccessAclTestCase extends ContentAccessTestHelp {
       $this->pass('No ACL module present, skipping test');
       return;
     }
+
+    // Create test user with separate role.
+    $this->test_user = $this->drupalCreateUser();
+
+    // Get the value of the new role.
+    // @see drupalCreateUser().
+    $test_user_roles = $this->test_user->getRoles();
+    foreach ($test_user_roles as $role) {
+      if (!in_array($role, [AccountInterface::AUTHENTICATED_ROLE])) {
+        $this->rid = $role;
+        break;
+      }
+    }
+
+    // Create admin user.
+    $this->admin_user = $this->drupalCreateUser([
+      'access content',
+      'administer content types',
+      'grant content access',
+      'grant own content access',
+      'administer nodes',
+      'access administration pages'
+    ]);
+    $this->drupalLogin($this->admin_user);
+
+    // Rebuild content access permissions.
+    node_access_rebuild();
+
+    // Create test content type.
+    $this->content_type = $this->drupalCreateContentType();
 
     // Create test node.
     $this->node1 = $this->drupalCreateNode(['type' => $this->content_type->id()]);

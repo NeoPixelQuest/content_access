@@ -2,31 +2,55 @@
 
 namespace Drupal\content_access\Tests;
 
+use Drupal\Core\Session\AccountInterface;
+use Drupal\simpletest\WebTestBase;
+
 /**
  * Automated SimpleTest Case for content access module.
  *
  * @group Access
  */
-class ContentAccessModuleTestCase extends ContentAccessTestHelp {
+class ContentAccessModuleTestCase extends WebTestBase {
+  use ContentAccessTestHelperTrait;
 
   /**
-   * Implementation of get_info() for information.
+   * Modules to enable.
+   *
+   * @var array
    */
-  public static function getInfo() {
-    return [
-      'name' => t('Content Access Module Tests'),
-      'description' => t(
-        'Various tests to check permission settings on nodes.'
-      ),
-      'group' => t('Content Access'),
-    ];
-  }
+  public static $modules = ['content_access'];
+
+  protected $test_user;
+  protected $admin_user;
+  protected $content_type;
+  protected $node1;
+  protected $node2;
 
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  function setUp() {
     parent::setUp();
+
+    // Create test user with separate role.
+    $this->test_user = $this->drupalCreateUser();
+
+    // Create admin user.
+    $this->admin_user = $this->drupalCreateUser([
+      'access content',
+      'administer content types',
+      'grant content access',
+      'grant own content access',
+      'administer nodes',
+      'access administration pages'
+    ]);
+    $this->drupalLogin($this->admin_user);
+
+    // Rebuild content access permissions.
+    node_access_rebuild();
+
+    // Create test content type.
+    $this->content_type = $this->drupalCreateContentType();
 
     // Create test nodes.
     $this->node1 = $this->drupalCreateNode(['type' => $this->content_type->id()]);

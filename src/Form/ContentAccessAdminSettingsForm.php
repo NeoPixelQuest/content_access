@@ -73,7 +73,7 @@ class ContentAccessAdminSettingsForm extends FormBase {
       '#title' => t('Per content node access control settings'),
       '#collapsible' => TRUE,
       '#description' => t('Optionally you can enable per content node access control settings. If enabled, a new tab for the content access settings appears when viewing content. You have to configure permission to access these settings at the @permissions page.', [
-        '@permissions' => \Drupal::l(t('permissions'), Url::fromRoute('user.admin_permissions')),
+        '@permissions' => Link::fromTextAndUrl(t('permissions'), Url::fromRoute('user.admin_permissions')),
       ]),
     ];
     $form['node']['per_node'] = [
@@ -165,11 +165,11 @@ class ContentAccessAdminSettingsForm extends FormBase {
 
       if (content_access_mass_update([$node_type])) {
         $node_types = node_type_get_names();
-        drupal_set_message(t('Permissions have been successfully rebuilt for the content type @types.', ['@types' => $node_types[$node_type]]));
+        $this->messenger()->addMessage(t('Permissions have been successfully rebuilt for the content type @types.', ['@types' => $node_types[$node_type]]));
       }
     }
 
-    drupal_set_message(t('Your changes have been saved.'));
+    $this->messenger()->addMessage(t('Your changes have been saved.'));
   }
 
   /**

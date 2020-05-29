@@ -772,7 +772,7 @@ function content_access_user_admin_perm_submit($form, FormStateInterface $form_s
     }
   }
   if ($types && content_access_mass_update(array_keys($types))) {
-    drupal_set_message(\Drupal::translation()->formatPlural(count($types),
+    \Drupal::messenger()->addMessage(\Drupal::translation()->formatPlural(count($types),
       'Permissions have been successfully rebuilt for the content type @types.',
       'Permissions have been successfully rebuilt for the content types @types.',
       ['@types' => implode(', ', $types)]
