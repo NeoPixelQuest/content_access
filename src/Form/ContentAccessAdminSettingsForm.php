@@ -5,6 +5,7 @@ namespace Drupal\content_access\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\Core\Link;
 use Drupal\user\PermissionHandlerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
