@@ -60,8 +60,8 @@ class ContentAccessPageForm extends FormBase {
       // This is disabled when there is no node passed.
       $form['acl'] = [
         '#type' => 'fieldset',
-        '#title' => $this->t('User access control lists'),
-        '#description' => $this->t('These settings allow you to grant access to specific users.'),
+        '#title' => t('User access control lists'),
+        '#description' => t('These settings allow you to grant access to specific users.'),
         '#collapsible' => TRUE,
         '#tree' => TRUE,
       ];
@@ -73,7 +73,7 @@ class ContentAccessPageForm extends FormBase {
         $update = (int) ($op == 'update');
         acl_node_add_acl($node->id(), $acl_id, $view, $update, (int) ($op == 'delete'), content_access_get_settings('priority', $node->getType()));
 
-        $form['acl'][$op] = acl_edit_form($form_state, $acl_id, $this->t('Grant @op access', ['@op' => $op]));
+        $form['acl'][$op] = acl_edit_form($form_state, $acl_id, t('Grant @op access', ['@op' => $op]));
 
         $post_acl_id = \Drupal::request()->request->get('acl_' . $acl_id, NULL);
         $form['acl'][$op]['#collapsed'] = !isset($post_acl_id) && !unserialize($form['acl'][$op]['user_list']['#default_value']);
@@ -99,7 +99,7 @@ class ContentAccessPageForm extends FormBase {
     // @todo not true anymore?
     // http://drupal.org/update/modules/6/7#hook_node_access_records
     if (!$node->isPublished()) {
-      $this->messenger()->addError(t("Warning: Your content is not published, so this settings are not taken into account as long as the content remains unpublished."));
+      $this->messenger()->addError($this->t("Warning: Your content is not published, so this settings are not taken into account as long as the content remains unpublished."));
     }
 
     return $form;
@@ -132,7 +132,7 @@ class ContentAccessPageForm extends FormBase {
     }
 
     // Apply new settings.
-    \Drupal::entityManager()->getAccessControlHandler('node')->writeGrants($node);
+    \Drupal::entityTypeManager()->getAccessControlHandler('node')->writeGrants($node);
     \Drupal::moduleHandler()->invokeAll('per_node', $settings);
 
     foreach (Cache::getBins() as $service_id => $cache_backend) {
@@ -166,7 +166,7 @@ class ContentAccessPageForm extends FormBase {
         $element[$key]['#disabled'] = TRUE;
         $element[$key]['#default_value'] = TRUE;
         $element[$key]['#prefix'] = '<span ' . new Attribute([
-          'title' => $this->t("This role has '@perm' permission, so access is granted.", ['@perm' => $this->t('administer nodes')])
+          'title' => t("This role has '@perm' permission, so access is granted.", ['@perm' => t('administer nodes')])
         ]) . '>';
         $element[$key]['#suffix'] = "</span>";
       }
@@ -181,9 +181,9 @@ class ContentAccessPageForm extends FormBase {
   function pageResetSubmit(array &$form, FormStateInterface $form_state) {
     $storage = $form_state->getStorage();
     content_access_delete_per_node_settings($storage['node']);
-    \Drupal::entityManager()->getAccessControlHandler('node')->writeGrants($storage['node']);
+    \Drupal::entityTypeManager()->getAccessControlHandler('node')->writeGrants($storage['node']);
 
-    $this->messenger()->addMessage(t('The permissions have been reseted to the content type defaults.'));
+    $this->messenger()->addMessage(t('The permissions have been reset to the content type defaults.'));
   }
 
 

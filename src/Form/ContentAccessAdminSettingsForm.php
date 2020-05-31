@@ -166,11 +166,11 @@ class ContentAccessAdminSettingsForm extends FormBase {
 
       if (content_access_mass_update([$node_type])) {
         $node_types = node_type_get_names();
-        $this->messenger()->addMessage(t('Permissions have been successfully rebuilt for the content type @types.', ['@types' => $node_types[$node_type]]));
+        $this->messenger()->addMessage($this->t('Permissions have been successfully rebuilt for the content type @types.', ['@types' => $node_types[$node_type]]));
       }
     }
 
-    $this->messenger()->addMessage(t('Your changes have been saved.'));
+    $this->messenger()->addMessage($this->t('Your changes have been saved.'));
   }
 
   /**
