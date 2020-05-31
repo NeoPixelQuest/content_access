@@ -71,33 +71,33 @@ class ContentAccessAdminSettingsForm extends FormBase {
     // Per node:
     $form['node'] = [
       '#type' => 'fieldset',
-      '#title' => t('Per content node access control settings'),
+      '#title' => $this->t('Per content node access control settings'),
       '#collapsible' => TRUE,
-      '#description' => t('Optionally you can enable per content node access control settings. If enabled, a new tab for the content access settings appears when viewing content. You have to configure permission to access these settings at the @permissions page.', [
-        '@permissions' => Link::fromTextAndUrl(t('permissions'), Url::fromRoute('user.admin_permissions')),
+      '#description' => $this->t('Optionally you can enable per content node access control settings. If enabled, a new tab for the content access settings appears when viewing content. You have to configure permission to access these settings at the @permissions page.', [
+        '@permissions' => Link::fromTextAndUrl($this->t('permissions'), Url::fromRoute('user.admin_permissions')),
       ]),
     ];
     $form['node']['per_node'] = [
       '#type' => 'checkbox',
-      '#title' => t('Enable per content node access control settings'),
+      '#title' => $this->t('Enable per content node access control settings'),
       '#default_value' => content_access_get_settings('per_node', $node_type),
     ];
 
     $form['advanced'] = [
       '#type' => 'fieldset',
-      '#title' => t('Advanced'),
+      '#title' => $this->t('Advanced'),
       '#collapsible' => TRUE,
       '#collapsed' => TRUE,
     ];
     $form['advanced']['priority'] = [
       '#type' => 'weight',
-      '#title' => t('Give content node grants priority'),
+      '#title' => $this->t('Give content node grants priority'),
       '#default_value' => content_access_get_settings('priority', $node_type),
-      '#description' => t('If you are only using this access control module, you can safely ignore this. If you are using multiple access control modules you can adjust the priority of this module.'),
+      '#description' => $this->t('If you are only using this access control module, you can safely ignore this. If you are using multiple access control modules you can adjust the priority of this module.'),
     ];
     $form['submit'] = [
       '#type' => 'submit',
-      '#value' => t('Submit'),
+      '#value' => $this->t('Submit'),
       '#weight' => 10,
     ];
 

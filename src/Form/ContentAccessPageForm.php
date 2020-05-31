@@ -60,8 +60,8 @@ class ContentAccessPageForm extends FormBase {
       // This is disabled when there is no node passed.
       $form['acl'] = [
         '#type' => 'fieldset',
-        '#title' => t('User access control lists'),
-        '#description' => t('These settings allow you to grant access to specific users.'),
+        '#title' => $this->t('User access control lists'),
+        '#description' => $this->t('These settings allow you to grant access to specific users.'),
         '#collapsible' => TRUE,
         '#tree' => TRUE,
       ];
@@ -73,7 +73,7 @@ class ContentAccessPageForm extends FormBase {
         $update = (int) ($op == 'update');
         acl_node_add_acl($node->id(), $acl_id, $view, $update, (int) ($op == 'delete'), content_access_get_settings('priority', $node->getType()));
 
-        $form['acl'][$op] = acl_edit_form($form_state, $acl_id, t('Grant @op access', ['@op' => $op]));
+        $form['acl'][$op] = acl_edit_form($form_state, $acl_id, $this->t('Grant @op access', ['@op' => $op]));
 
         $post_acl_id = \Drupal::request()->request->get('acl_' . $acl_id, NULL);
         $form['acl'][$op]['#collapsed'] = !isset($post_acl_id) && !unserialize($form['acl'][$op]['user_list']['#default_value']);
@@ -85,14 +85,14 @@ class ContentAccessPageForm extends FormBase {
 
     $form['reset'] = [
       '#type' => 'submit',
-      '#value' => t('Reset to defaults'),
+      '#value' => $this->t('Reset to defaults'),
       '#weight' => 10,
       '#submit' => ['::pageResetSubmit'],
       '#access' => !empty(content_access_get_per_node_settings($node)),
     ];
     $form['submit'] = [
       '#type' => 'submit',
-      '#value' => t('Submit'),
+      '#value' => $this->t('Submit'),
       '#weight' => 10,
     ];
 
@@ -157,7 +157,7 @@ class ContentAccessPageForm extends FormBase {
         $element[$key]['#disabled'] = TRUE;
         $element[$key]['#default_value'] = FALSE;
         $element[$key]['#prefix'] = '<span ' . new Attribute([
-          'title' => t("This role is lacking the permission '@perm', so it has no access.", ['@perm' => t('access content')])
+          'title' => $this->t("This role is lacking the permission '@perm', so it has no access.", ['@perm' => $this->t('access content')])
         ]) . '>';
         $element[$key]['#suffix'] = "</span>";
       }
@@ -166,7 +166,7 @@ class ContentAccessPageForm extends FormBase {
         $element[$key]['#disabled'] = TRUE;
         $element[$key]['#default_value'] = TRUE;
         $element[$key]['#prefix'] = '<span ' . new Attribute([
-          'title' => t("This role has '@perm' permission, so access is granted.", ['@perm' => t('administer nodes')])
+          'title' => $this->t("This role has '@perm' permission, so access is granted.", ['@perm' => $this->t('administer nodes')])
         ]) . '>';
         $element[$key]['#suffix'] = "</span>";
       }
@@ -202,7 +202,7 @@ class ContentAccessPageForm extends FormBase {
           $element[$op][$rid]['#checked'] = TRUE;
 
           $prefix_attr = new Attribute([
-            'title' => t('Permission is granted due to the content type\'s access control settings.'),
+            'title' => $this->t("Permission is granted due to the content type's access control settings."),
           ]);
           $element[$op][$rid]['#prefix'] = '<span ' . $prefix_attr . '>';
           $element[$op][$rid]['#suffix'] = "</span>";

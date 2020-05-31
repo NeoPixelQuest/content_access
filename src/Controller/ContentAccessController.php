@@ -15,7 +15,7 @@ class ContentAccessController extends ControllerBase {
    */
   public function getContentAccessTitle() {
     $node = \Drupal::routeMatch()->getParameter('node');
-    $title = t('Access control for <em>@title</em>', ['@title' => $node->getTitle()]);
+    $title = $this->t('Access control for <em>@title</em>', ['@title' => $node->getTitle()]);
 
     return $title;
   }
