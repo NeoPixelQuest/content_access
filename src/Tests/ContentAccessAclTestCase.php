@@ -28,7 +28,7 @@ class ContentAccessAclTestCase extends WebTestBase {
   /**
    * Setup configuration before each test.
    */
-  function setUp() {
+  public function setUp() {
     parent::setUp();
 
     if (!\Drupal::moduleHandler()->moduleExists('acl')) {
@@ -73,7 +73,7 @@ class ContentAccessAclTestCase extends WebTestBase {
   /**
    * Test Viewing accessibility with permissions for single users.
    */
-  function testViewAccess() {
+  public function testViewAccess() {
     // Exit test if ACL module could not be enabled.
     if (!\Drupal::moduleHandler()->moduleExists('acl')) {
       $this->pass('No ACL module present, skipping test');
@@ -93,7 +93,7 @@ class ContentAccessAclTestCase extends WebTestBase {
     $edit = [
       'acl[view][add]' => $this->test_user->getUsername(),
     ];
-    $this->drupalPostForm('node/'. $this->node1->id() .'/access', $edit, t('Add User'));
+    $this->drupalPostForm('node/'. $this->node1->id() . '/access', $edit, t('Add User'));
     $this->drupalPostForm(NULL, [], t('Submit'));
 
     // Logout admin, try to access the node anonymously.
@@ -124,7 +124,7 @@ class ContentAccessAclTestCase extends WebTestBase {
   /**
    * Test Editing accessibility with permissions for single users.
    */
-  function testEditAccess() {
+  public function testEditAccess() {
     // Exit test if ACL module could not be enabled.
     if (!\Drupal::moduleHandler()->moduleExists('acl')) {
       $this->pass('No ACL module present, skipping test');
@@ -138,17 +138,17 @@ class ContentAccessAclTestCase extends WebTestBase {
     $edit = [
       'acl[update][add]' => $this->test_user->getUsername(),
     ];
-    $this->drupalPostForm('node/' . $this->node1->id() .'/access', $edit, t('Add User'));
+    $this->drupalPostForm('node/' . $this->node1->id() . '/access', $edit, t('Add User'));
     $this->drupalPostForm(NULL, [], t('Submit'));
 
     // Logout admin, try to edit the node anonymously.
     $this->drupalLogout();
-    $this->drupalGet('node/' . $this->node1->id() .'/edit');
+    $this->drupalGet('node/' . $this->node1->id() . '/edit');
     $this->assertText(t('Access denied'), 'node is not editable');
 
     // Login test user, edit access should be allowed now.
     $this->drupalLogin($this->test_user);
-    $this->drupalGet('node/' . $this->node1->id() .'/edit');
+    $this->drupalGet('node/' . $this->node1->id() . '/edit');
     $this->assertNoText(t('Access denied'), 'node is editable');
 
     // Login admin and disable per node access.
@@ -157,19 +157,19 @@ class ContentAccessAclTestCase extends WebTestBase {
 
     // Logout admin, try to edit the node anonymously.
     $this->drupalLogout();
-    $this->drupalGet('node/' . $this->node1->id() .'/edit');
+    $this->drupalGet('node/' . $this->node1->id() . '/edit');
     $this->assertText(t('Access denied'), 'node is not editable');
 
     // Login test user, edit access should be denied now.
     $this->drupalLogin($this->test_user);
-    $this->drupalGet('node/' . $this->node1->id() .'/edit');
+    $this->drupalGet('node/' . $this->node1->id() . '/edit');
     $this->assertText(t('Access denied'), 'node is not editable');
   }
 
   /**
    * Test Deleting accessibility with permissions for single users.
    */
-  function testDeleteAccess() {
+  public function testDeleteAccess() {
     // Exit test if ACL module could not be enabled.
     if (!\Drupal::moduleHandler()->moduleExists('acl')) {
       $this->pass('No ACL module present, skipping test');
@@ -183,17 +183,17 @@ class ContentAccessAclTestCase extends WebTestBase {
     $edit = [
       'acl[delete][add]' => $this->test_user->getUsername(),
     ];
-    $this->drupalPostForm('node/' . $this->node1->id() .'/access', $edit, t('Add User'));
+    $this->drupalPostForm('node/' . $this->node1->id() . '/access', $edit, t('Add User'));
     $this->drupalPostForm(NULL, [], t('Submit'));
 
     // Logout admin, try to delete the node anonymously.
     $this->drupalLogout();
-    $this->drupalGet('node/' . $this->node1->id() .'/delete');
+    $this->drupalGet('node/' . $this->node1->id() . '/delete');
     $this->assertText(t('Access denied'), 'node is not deletable');
 
     // Login test user, delete access should be allowed now.
     $this->drupalLogin($this->test_user);
-    $this->drupalGet('node/' . $this->node1->id() .'/delete');
+    $this->drupalGet('node/' . $this->node1->id() . '/delete');
     $this->assertNoText(t('Access denied'), 'node is deletable');
 
     // Login admin and disable per node access.
@@ -202,12 +202,12 @@ class ContentAccessAclTestCase extends WebTestBase {
 
     // Logout admin, try to delete the node anonymously.
     $this->drupalLogout();
-    $this->drupalGet('node/' . $this->node1->id() .'/delete');
+    $this->drupalGet('node/' . $this->node1->id() . '/delete');
     $this->assertText(t('Access denied'), 'node is not deletable');
 
     // Login test user, delete access should be denied now.
     $this->drupalLogin($this->test_user);
-    $this->drupalGet('node/' . $this->node1->id() .'/delete');
+    $this->drupalGet('node/' . $this->node1->id() . '/delete');
     $this->assertText(t('Access denied'), 'node is not deletable');
   }
 

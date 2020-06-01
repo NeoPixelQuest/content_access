@@ -60,7 +60,7 @@ class ContentAccessModuleTestCase extends WebTestBase {
   /**
    * Test for viewing nodes.
    */
-  function testViewAccess() {
+  public function testViewAccess() {
     // Restrict access to the content type.
     $access_permissions = [
       'view[anonymous]' => FALSE,
@@ -119,10 +119,10 @@ class ContentAccessModuleTestCase extends WebTestBase {
     // Login admin, swap permissions between content type and node2.
     $this->drupalLogin($this->admin_user);
 
-    // Restrict access to content type
+    // Restrict access to content type.
     $this->changeAccessContentTypeKeyword('view', FALSE);
 
-    // Grant access to node2
+    // Grant access to node2.
     $this->changeAccessNodeKeyword($this->node2, 'view');
 
     // Logout admin and try to access both nodes anonymously.
@@ -145,7 +145,7 @@ class ContentAccessModuleTestCase extends WebTestBase {
   /**
    * Test for editing nodes.
    */
-  function testEditAccess() {
+  public function testEditAccess() {
     // Logout admin and try to edit the node anonymously.
     $this->drupalLogout();
     $this->drupalGet('node/' . $this->node1->id() . '/edit');
@@ -178,7 +178,7 @@ class ContentAccessModuleTestCase extends WebTestBase {
     // Restrict access for this content type for the test user.
     $this->changeAccessContentTypeKeyword('update', FALSE);
 
-    // Allow acces for node1 only
+    // Allow acces for node1 only.
     $this->changeAccessNodeKeyword($this->node1, 'update');
     $this->changeAccessNodeKeyword($this->node2, 'update', FALSE);
 
@@ -226,7 +226,7 @@ class ContentAccessModuleTestCase extends WebTestBase {
   /**
    * Test for deleting nodes.
    */
-  function testDeleteAccess() {
+  public function testDeleteAccess() {
     // Logout admin and try to delete the node anonymously.
     $this->drupalLogout();
     $this->drupalGet('node/' . $this->node1->id() . '/delete');
@@ -320,7 +320,7 @@ class ContentAccessModuleTestCase extends WebTestBase {
   /**
    * Test own view access.
    */
-  function testOwnViewAccess() {
+  public function testOwnViewAccess() {
     // Setup 2 test users.
     $test_user1 = $this->test_user;
     $test_user2 = $this->drupalCreateUser();

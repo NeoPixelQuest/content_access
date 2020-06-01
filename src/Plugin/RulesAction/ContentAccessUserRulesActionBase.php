@@ -21,7 +21,9 @@ class ContentAccessUserRulesActionBase extends RulesActionBase implements Contai
   protected $database;
 
   /**
+   * Defined $logger.
    * @var \Psr\Log\LoggerInterface
+   *
    */
   protected $logger;
 

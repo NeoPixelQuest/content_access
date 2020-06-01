@@ -32,7 +32,9 @@ class ActionRevokeNodePermissions extends RulesActionBase implements ContainerFa
   use ActionCommonTrait;
 
   /**
+   * Defined $logger.
    * @var \Psr\Log\LoggerInterface
+   *
    */
   protected $logger;
 

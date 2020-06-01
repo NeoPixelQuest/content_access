@@ -16,7 +16,7 @@ trait ContentAccessTestHelperTrait {
   /**
    * Change access permissions for a content type.
    */
-  function changeAccessContentType($access_settings) {
+  public function changeAccessContentType($access_settings) {
     $this->drupalPostForm(
       'admin/structure/types/manage/' . $this->content_type->id() . '/access',
       $access_settings,
@@ -29,10 +29,10 @@ trait ContentAccessTestHelperTrait {
   }
 
   /**
-   * Change access permissions for a content type by a given keyword
-   * for the role of the user.
+   * Change access permissions for a content type by a given keyword for the role of the user.
+   *
    */
-  function changeAccessContentTypeKeyword($keyword, $access = TRUE, AccountInterface $user = NULL) {
+  public function changeAccessContentTypeKeyword($keyword, $access = TRUE, AccountInterface $user = NULL) {
     $roles = [];
 
     if ($user === NULL) {
@@ -57,7 +57,7 @@ trait ContentAccessTestHelperTrait {
   /**
    * Change the per node access setting for a content type.
    */
-  function changeAccessPerNode($access = TRUE) {
+  public function changeAccessPerNode($access = TRUE) {
     $access_permissions = [
       'per_node' => $access,
     ];
@@ -65,10 +65,10 @@ trait ContentAccessTestHelperTrait {
   }
 
   /**
-   * Change access permissions for a node by a given keyword
-   * (view, update or delete).
+   * Change access permissions for a node by a given keyword (view, update or delete).
+   *
    */
-  function changeAccessNodeKeyword(NodeInterface $node, $keyword, $access = TRUE) {
+  public function changeAccessNodeKeyword(NodeInterface $node, $keyword, $access = TRUE) {
     $user = $this->test_user;
     $user_roles = $user->getRoles();
     foreach ($user_roles as $rid) {
@@ -86,7 +86,7 @@ trait ContentAccessTestHelperTrait {
   /**
    * Change access permission for a node.
    */
-  function changeAccessNode(NodeInterface $node, $access_settings) {
+  public function changeAccessNode(NodeInterface $node, $access_settings) {
     $this->drupalPostForm('node/' . $node->id() . '/access', $access_settings, t('Submit'));
     $this->assertText(
       t('Your changes have been saved.'),

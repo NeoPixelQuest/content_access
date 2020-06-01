@@ -60,7 +60,7 @@ class ContentAccessAdminSettingsForm extends FormBase {
 
     $form_state->setStorage($storage);
 
-    // Add role based per content type settings
+    // Add role based per content type settings.
     $defaults = [];
     foreach (_content_access_get_operations() as $op => $label) {
       $defaults[$op] = content_access_get_settings($op, $node_type);
@@ -136,14 +136,14 @@ class ContentAccessAdminSettingsForm extends FormBase {
           $roles_permissions[$rid][$permission] = FALSE;
         }
       }
-      // Don't save the setting, so its default value (get permission) is applied
-      // always.
+      // Don't save the setting, so its default value (get permission) is
+      // applied always.
       unset($values[$op]);
     }
 
     $this->savePermissions($roles_permissions);
 
-    // Update content access settings
+    // Update content access settings.
     $settings = content_access_get_settings('all', $node_type);
     foreach (content_access_available_settings() as $setting) {
       if (isset($values[$setting])) {
@@ -160,7 +160,8 @@ class ContentAccessAdminSettingsForm extends FormBase {
       content_access_get_settings('per_node', $node_type) != $form['node']['per_node']['#default_value']
     ) {
 
-      // If per node has been disabled and we use the ACL integration, we have to remove possible ACLs now.
+      // If per node has been disabled and we use the ACL integration, we have
+      // to remove possible ACLs now.
       if (!content_access_get_settings('per_node', $node_type) && $form['node']['per_node']['#default_value'] && \Drupal::moduleHandler()->moduleExists('acl')) {
         _content_access_remove_acls($node_type);
       }

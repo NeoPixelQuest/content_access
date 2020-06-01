@@ -9,8 +9,8 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\node\Entity\NodeType;
 
 /**
- * Determines access to routes based on permissions defined via
- * $module.permissions.yml files.
+ * Determines access to routes based on permissions defined via $module.permissions.yml files.
+ *
  */
 class ContentAccessAdminSettingsAccessCheck implements AccessInterface {
 
