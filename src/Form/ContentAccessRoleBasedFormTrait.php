@@ -3,6 +3,10 @@
 namespace Drupal\content_access\Form;
 
 use Drupal\user\Entity\Role;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Element;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Template\Attribute;
 
 /**
  * Common components for Content Access forms.
@@ -50,6 +54,11 @@ trait ContentAccessRoleBasedFormTrait {
         '#title' => $label,
         '#default_value' => $defaults[$op],
       ];
+
+      $form['per_role'][$op]['#process'] = array(
+        array('\Drupal\Core\Render\Element\Checkboxes', 'processCheckboxes'),
+        array('\Drupal\content_access\Form\ContentAccessRoleBasedFormTrait', 'disableCheckboxes'),
+      );
     }
 
     $form['per_role']['clearer'] = [
@@ -59,6 +68,39 @@ trait ContentAccessRoleBasedFormTrait {
     $form['#attached']['library'][] = 'content_access/drupal.content_access';
 
     return $form;
+  }
+
+  /**
+   * Formapi #process callback, that disables checkboxes for roles without access to content
+   */
+  public static function disableCheckboxes(&$element, FormStateInterface $form_state, &$complete_form) {
+    $access_roles = content_access_get_permission_access('access content');
+    $admin_roles = content_access_get_permission_access('administer nodes');
+
+    foreach (Element::children($element) as $key) {
+      if (!in_array($key, $access_roles) &&
+        $key == AccountInterface::ANONYMOUS_ROLE &&
+        !in_array(AccountInterface::AUTHENTICATED_ROLE, $access_roles)
+      ) {
+        $element[$key]['#disabled'] = TRUE;
+        $element[$key]['#default_value'] = FALSE;
+        $element[$key]['#prefix'] = '<span ' . new Attribute([
+          'title' => t("This role is lacking the permission '@perm', so it has no access.", ['@perm' => t('access content')])
+        ]) . '>';
+        $element[$key]['#suffix'] = "</span>";
+      }
+      elseif (in_array($key, $admin_roles) || ($key != AccountInterface::ANONYMOUS_ROLE && in_array(AccountInterface::AUTHENTICATED_ROLE, $admin_roles))) {
+        // Fix the checkbox to be enabled for users with administer node privileges.
+        $element[$key]['#disabled'] = TRUE;
+        $element[$key]['#default_value'] = TRUE;
+        $element[$key]['#prefix'] = '<span ' . new Attribute([
+          'title' => t("This role has '@perm' permission, so access is granted.", ['@perm' => t('administer nodes')])
+        ]) . '>';
+        $element[$key]['#suffix'] = "</span>";
+      }
+    }
+
+    return $element;
   }
 
 }

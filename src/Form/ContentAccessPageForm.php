@@ -2,13 +2,11 @@
 
 namespace Drupal\content_access\Form;
 
-use Drupal\Core\Form\FormBase;
-use Drupal\Core\Render\Element;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\node\NodeInterface;
-use Drupal\Core\Template\Attribute;
 use Drupal\Core\Cache\Cache;
-use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Form\FormBase;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Template\Attribute;
+use Drupal\node\NodeInterface;
 
 /**
  * Node Access settings form.
@@ -35,14 +33,6 @@ class ContentAccessPageForm extends FormBase {
     }
 
     $this->roleBasedForm($form, $defaults, $node->getType());
-    foreach (Element::children($form['per_role']) as $op) {
-      if (!empty($form['per_role'][$op]['#type']) && $form['per_role'][$op]['#type'] == 'checkboxes') {
-        $form['per_role'][$op]['#process'] = [
-          ['\Drupal\Core\Render\Element\Checkboxes', 'processCheckboxes'],
-          ['\Drupal\content_access\Form\ContentAccessPageForm', 'disableCheckboxes'],
-        ];
-      }
-    }
 
     // Add an after_build handler that disables checkboxes, which are enforced by permissions.
     $build_info = $form_state->getBuildInfo();
@@ -53,7 +43,9 @@ class ContentAccessPageForm extends FormBase {
     ];
     $form_state->setBuildInfo($build_info);
 
-    $form['per_role']['#after_build'] = ['::forcePermissions'];
+    foreach (['update', 'update_own', 'delete', 'delete_own'] as $op) {
+      $form['per_role'][$op]['#process'][] = '::forcePermissions';
+    }
 
     // ACL form.
     if (\Drupal::moduleHandler()->moduleExists('acl')) {
@@ -143,39 +135,6 @@ class ContentAccessPageForm extends FormBase {
   }
 
   /**
-   * Formapi #process callback, that disables checkboxes for roles without access to content
-   */
-  public static function disableCheckboxes(&$element, FormStateInterface $form_state, &$complete_form) {
-    $access_roles = content_access_get_permission_access('access content');
-    $admin_roles = content_access_get_permission_access('administer nodes');
-
-    foreach (Element::children($element) as $key) {
-      if (!in_array($key, $access_roles) &&
-        $key == AccountInterface::ANONYMOUS_ROLE &&
-        !in_array(AccountInterface::AUTHENTICATED_ROLE, $access_roles)
-      ) {
-        $element[$key]['#disabled'] = TRUE;
-        $element[$key]['#default_value'] = FALSE;
-        $element[$key]['#prefix'] = '<span ' . new Attribute([
-          'title' => $this->t("This role is lacking the permission '@perm', so it has no access.", ['@perm' => $this->t('access content')])
-        ]) . '>';
-        $element[$key]['#suffix'] = "</span>";
-      }
-      elseif (in_array($key, $admin_roles) || ($key != AccountInterface::ANONYMOUS_ROLE && in_array(AccountInterface::AUTHENTICATED_ROLE, $admin_roles))) {
-        // Fix the checkbox to be enabled for users with administer node privileges
-        $element[$key]['#disabled'] = TRUE;
-        $element[$key]['#default_value'] = TRUE;
-        $element[$key]['#prefix'] = '<span ' . new Attribute([
-          'title' => t("This role has '@perm' permission, so access is granted.", ['@perm' => t('administer nodes')])
-        ]) . '>';
-        $element[$key]['#suffix'] = "</span>";
-      }
-    }
-
-    return $element;
-  }
-
-  /**
    * Submit callback for reset on content_access_page().
    */
   function pageResetSubmit(array &$form, FormStateInterface $form_state) {
@@ -188,29 +147,25 @@ class ContentAccessPageForm extends FormBase {
 
 
   /**
-   * Formapi #after_build callback, that disables checkboxes for roles without access to content.
+   * Formapi #process callback, that disables checkboxes for roles without access to content.
    */
-  function forcePermissions($element, FormStateInterface $form_state) {
+  function forcePermissions($element, FormStateInterface $form_state, &$complete_form) {
     $storage = $form_state->getStorage();
-    if (!empty($storage['node'])) {
+    if (!empty($storage['node'] && is_array($element['#parents']))) {
       $node = $storage['node'];
-      foreach (['update', 'update_own', 'delete', 'delete_own'] as $op) {
-        foreach (content_access_get_settings($op, $node->getType()) as $rid) {
-          $element[$op][$rid]['#disabled'] = TRUE;
-          $element[$op][$rid]['#attributes']['disabled'] = 'disabled';
-          $element[$op][$rid]['#value'] = TRUE;
-          $element[$op][$rid]['#checked'] = TRUE;
+      foreach (content_access_get_settings(reset($element['#parents']), $node->getType()) as $rid) {
+        $element[$rid]['#disabled'] = TRUE;
+        $element[$rid]['#attributes']['disabled'] = 'disabled';
+        $element[$rid]['#value'] = TRUE;
+        $element[$rid]['#checked'] = TRUE;
 
-          $prefix_attr = new Attribute([
-            'title' => $this->t("Permission is granted due to the content type's access control settings."),
-          ]);
-          $element[$op][$rid]['#prefix'] = '<span ' . $prefix_attr . '>';
-          $element[$op][$rid]['#suffix'] = "</span>";
-        }
+        $prefix_attr = new Attribute([
+          'title' => t('Permission is granted due to the content type\'s access control settings.'),
+        ]);
+        $element[$rid]['#prefix'] = '<span ' . $prefix_attr . '>';
+        $element[$rid]['#suffix'] = "</span>";
       }
     }
-
     return $element;
   }
-
 }
