@@ -40,15 +40,13 @@ function content_access_help($route_name, RouteMatchInterface $route_match) {
       $output .= '<h3>' . t('Use') . '</h3>';
       $output .= '<p>' . t('It provides two new permissions: <em>view all</em> (allows anyone to view the content) and <em>view own</em> (allows  only the content creator to see his/her own content). It also gives access to the existing core permissions <em>edit</em> and <em>delete</em> on the same settings page.') . '</p>';
       $output .= '<p>' . t('It provides the following modalities:') . '</p><ul>';
-      $contenttype = Link::fromTextAndUrl(t('content type'), Url::fromRoute('entity.node_type.collection'));
-      $output .= '<li>' . t('Each <em>@contenttype</em> can have its own default content access settings by role.', [
-        '@contenttype' => $contenttype->toString(),
+      $output .= '<li>' . t('Each <a href=":url"><em>content type</em></a> can have its own default content access settings by role.', [
+        ':url' => Url::fromRoute('entity.node_type.collection')->toString(),
       ]
       ) . '</li>';
       $output .= '<li>' . t('Optionally you can enable  role based access control settings per <em>content node</em>.') . '</li>';
-      $acllink = Link::fromTextAndUrl('ACL', Url::fromUri('https://www.drupal.org/project/acl/'));
-      $output .= '<li>' . t('Access control can be further customized per <em>user</em> if you have the <strong>@acllink</strong> module enabled.', [
-       '@acllink' => $acllink->toString(),
+      $output .= '<li>' . t('Access control can be further customized per <em>user</em> if you have the <a href=":url"><strong>ACL</strong></a> module enabled.', [
+       ':url' => Url::fromUri('https://www.drupal.org/project/acl/')->toString(),
       ]
       ) . '</li></ul>';
       if ($hint_service) {
@@ -56,9 +54,8 @@ function content_access_help($route_name, RouteMatchInterface $route_match) {
           'https://drupal.org/node/1194974', TRUE) . '</p>';
       }
       else {
-        $ahhlink = Link::fromTextAndUrl('Advanced Help Hint', Url::fromUri('https://www.drupal.org/project/advanced_help_hint'));
-        $output .= '<p>' .t('If you install and enable the module <strong>@ahhlink</strong>, you will get more help for <strong>Content Access</strong>.', [
-            '@ahhlink' => $ahhlink->toString(),
+        $output .= '<p>' .t('If you install and enable the module <a href=":url"><strong>Advanced Help Hint</strong></a>, you will get more help for <strong>Content Access</strong>.', [
+            ':url' => Url::fromUri('https://www.drupal.org/project/advanced_help_hint')->toString(),
 	]
 	) . '</p>';
       }

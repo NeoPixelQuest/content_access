@@ -69,13 +69,12 @@ class ContentAccessAdminSettingsForm extends FormBase {
     $this->roleBasedForm($form, $defaults, $node_type);
 
     // Per node:
-    $permissions = Link::fromTextAndUrl($this->t('permissions'), Url::fromRoute('user.admin_permissions'));
     $form['node'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Per content node access control settings'),
       '#collapsible' => TRUE,
-      '#description' => $this->t('Optionally you can enable per content node access control settings. If enabled, a new tab for the content access settings appears when viewing content. You have to configure permission to access these settings at the @permissions page.', [
-        '@permissions' => $permissions->toString(),
+      '#description' => $this->t('Optionally you can enable per content node access control settings. If enabled, a new tab for the content access settings appears when viewing content. You have to configure permission to access these settings at the <a href=":url">permissions</a> page.', [
+        ':url' => Url::fromRoute('user.admin_permissions')->toString(),
       ]),
     ];
     $form['node']['per_node'] = [
