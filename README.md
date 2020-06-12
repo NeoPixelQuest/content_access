@@ -43,8 +43,7 @@ Features:
 * It reuses existing functionality instead of reimplementing it. So
   one can install the **ACL** module and set per user access control
   settings per content node.
-* It comes with a submodule named **Content Access Rules
-  Interations**. It provides conditions and actions for the **Rules**
+* The project provides conditions and actions for the **Rules**
   module, which allows one to configure rule-based access permissions.
 * It optimizes the written content node grants, so that only the
   necessary grants are written.  This is important for the

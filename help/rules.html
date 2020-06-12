@@ -44,20 +44,13 @@ it.</p>
 <div class="help-img-caption" style="max-width:620px">Adding a new reaction rule</div>
 </div>
 
-<p>xxx</p>
-<ul>
-<li>Leave “Restrict by type” set to “- None -”.</li>
-<li>Click “Save”.</li>
-</ul>
-<p>xxx</p>
-
 <p>This sets up a new rule named “editor oversight” that triggers when a new node is saved.</p>
 
 <ul>
   <li>Under “Conditions”, click “Add condition”,</li>
   <li>From the pulldown menu  “Select <em>condition</em> to add”, select “User has role(s)”.</li>
   <li>After making the selection, you automatically continue to a new page to set up a data selector.</li>
-  <li>For the “Data selector” field, enter choose “node:author”.</li>
+  <li>For the “Data selector” field, enter “node:author”.</li>
   <li>Under “Roles”, for “Value”, enter “writer”.</li>
   <li>Click “Save”.</li>
 </ul>
@@ -72,8 +65,15 @@ triggered and the conditions are met.</p>
 <ul>
   <li>Under “Actions”, click “Add action”,</li>
   <li>From the pulldown menu “Select <em>action</em> to add”, select “Grant Access by role”.</li>
-<li>  Blow up</li>
   <li>After making the selection, you automatically continue to a new page to set up role based access settings.</li>
+  <li>[From this point. Instructions missing or wrong - please help add them.]</li>
+</ul>
+
+<p>The instructions below are copied from the Drupal 7 versions of the project.  They need to be corrected for Drupal 8 and later.
+To help out, please vist <a href="https://www.drupal.org/project/content_access/issues/3151287">Issue #3151287@Drupal.org</a>.</p>
+
+<ul>
+  <li>Look under “Content”.</li>
   <li>Look under “Role-based access control settings”. Give the “editor” the right to “View any content” “View own content”. Checking a box grants the access.</li>
   <li>Under “Actions”, again click “Add action”,</li>
   <li>From the pulldown menu “Select <em>action</em> to add”, select “Revoke Access by role”.</li>
@@ -88,4 +88,3 @@ triggered and the conditions are met.</p>
 <li>Create an artcle as “Alice” (no special role). Verify that is viewable by everyone.</li>
 <li>Create an artcle as “Bob” (the writer). Verify that is viewable by “Ben” (the editor), but not by “Alice”.</li>
 </ul>
-
