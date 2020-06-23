@@ -30,7 +30,7 @@ class ContentAccessUserRulesActionBase extends RulesActionBase implements Contai
   /**
    * {@inheritdoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, LoggerChannelFactoryInterface $logger) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, LoggerChannelFactoryInterface $logger, Connection $database) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->logger = $logger;
     $this->database = $database;
@@ -44,8 +44,8 @@ class ContentAccessUserRulesActionBase extends RulesActionBase implements Contai
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('database'),
-      $container->get('logger.factory')
+      $container->get('logger.factory'),
+      $container->get('database')
     );
   }
 
