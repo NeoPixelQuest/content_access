@@ -165,7 +165,7 @@ function content_access_entity_operation(EntityInterface $entity) {
   if ($info->getBundleOf() == 'node') {
     $account = \Drupal::currentUser();
 
-    if ($account->hasPermission('administer nodes') && $account->hasPermission('administer content types')) {
+    if ($account->hasPermission('bypass node access') && $account->hasPermission('administer content types')) {
       $operations['access-control'] = [
         'title' => t('Access control'),
         'weight' => 25,

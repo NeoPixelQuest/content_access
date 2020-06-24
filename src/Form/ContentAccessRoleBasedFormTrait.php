@@ -24,9 +24,8 @@ trait ContentAccessRoleBasedFormTrait {
       t('Note that users need at least the %access_content permission to be able to deal in any way with content.', [
         '%access_content' => t('access content'),
       ]),
-      t('Furthermore note that content which is not @published is treated in a different way by drupal: It can be viewed only by its author or users with the %administer_nodes permission.', [
-        '@published' => t('published'),
-        '%administer_nodes' => t('administer nodes'),
+      t('Furthermore note that content which is not published is treated in a different way by Drupal: It can be viewed only by its author or users with the %perm permission.', [
+        '%perm' => t('bypass node access'),
       ]),
     ];
     $form['per_role'] = [
@@ -75,7 +74,7 @@ trait ContentAccessRoleBasedFormTrait {
    */
   public static function disableCheckboxes(&$element, FormStateInterface $form_state, &$complete_form) {
     $access_roles = content_access_get_permission_access('access content');
-    $admin_roles = content_access_get_permission_access('administer nodes');
+    $admin_roles = content_access_get_permission_access('bypass node access');
 
     foreach (Element::children($element) as $key) {
       if (!in_array($key, $access_roles) &&
@@ -94,7 +93,7 @@ trait ContentAccessRoleBasedFormTrait {
         $element[$key]['#disabled'] = TRUE;
         $element[$key]['#default_value'] = TRUE;
         $element[$key]['#prefix'] = '<span ' . new Attribute([
-          'title' => t("This role has '@perm' permission, so access is granted.", ['@perm' => t('administer nodes')])
+          'title' => t("This role has '@perm' permission, so access is granted.", ['@perm' => t('bypass node access')])
         ]) . '>';
         $element[$key]['#suffix'] = "</span>";
       }

@@ -21,7 +21,7 @@ class ContentAccessAdminSettingsAccessCheck implements AccessInterface {
     $node_type_id = $route_match->getParameter('node_type');
     $node_type = NodeType::load($node_type_id);
 
-    $permission_match = $account->hasPermission('administer nodes') && $account->hasPermission('administer content types');
+    $permission_match = $account->hasPermission('bypass node access') && $account->hasPermission('administer content types');
     return AccessResult::allowedIf($permission_match && $node_type);
   }
 

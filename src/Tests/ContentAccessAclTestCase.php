@@ -55,7 +55,7 @@ class ContentAccessAclTestCase extends WebTestBase {
       'administer content types',
       'grant content access',
       'grant own content access',
-      'administer nodes',
+      'bypass node access',
       'access administration pages'
     ]);
     $this->drupalLogin($this->admin_user);
