@@ -167,13 +167,15 @@ class ContentAccessAdminSettingsForm extends FormBase {
 
       if (content_access_mass_update([$node_type])) {
         $node_types = node_type_get_names();
-        $this->messenger()->addMessage($this->t('Permissions have been successfully rebuilt for the content type @types.', ['@types' => $node_types[$node_type]]));
+	// This does not gurantee a rebuild.
+        $this->messenger()->addMessage($this->t('Permissions have been changed for the content type @types.<br />You may have to <a href=":rebuild">rebuild permisions</a> for your changes to take effect.',
+	  ['@types' => $node_types[$node_type], ':rebuild' => Url::FromRoute('node.configure_rebuild_confirm')->ToString()]));
       }
     }
+    else {
+      $this->messenger()->addMessage($this->t('No change.'));
+    }
 
-    $this->messenger()->addMessage(t('Your changes have been saved. You may have to <a href=":rebuild">rebuild permisions</a> for your changes to take effect.',
-      array(':rebuild' => Url::FromRoute('node.configure_rebuild_confirm')->ToString())));
-    //$this->messenger()->addMessage($this->t('Your changes have been saved.'));
   }
 
   /**
