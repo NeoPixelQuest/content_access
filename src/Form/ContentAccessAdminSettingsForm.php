@@ -171,7 +171,9 @@ class ContentAccessAdminSettingsForm extends FormBase {
       }
     }
 
-    $this->messenger()->addMessage($this->t('Your changes have been saved.'));
+    $this->messenger()->addMessage(t('Your changes have been saved. You may have to <a href=":rebuild">rebuild permisions</a> for your changes to take effect.',
+      array(':rebuild' => Url::FromRoute('node.configure_rebuild_confirm')->ToString())));
+    //$this->messenger()->addMessage($this->t('Your changes have been saved.'));
   }
 
   /**

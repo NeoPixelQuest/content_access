@@ -7,6 +7,8 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Template\Attribute;
 use Drupal\node\NodeInterface;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
 
 /**
  * Node Access settings form.
@@ -130,8 +132,11 @@ class ContentAccessPageForm extends FormBase {
     foreach (Cache::getBins() as $service_id => $cache_backend) {
       $cache_backend->deleteAll();
     }
-
-    $this->messenger()->addMessage(t('Your changes have been saved.'));
+//xxxx
+// route: node.configure_rebuild_confirm:
+// path:  '/admin/reports/status/rebuild'
+    $this->messenger()->addMessage(t('Your changes have been saved. You may have to <a href=":rebuild">rebuild permisions</a> for your changes to take effect.',
+      array(':rebuild' => Url::FromRoute('node.configure_rebuild_confirm')->ToString())));
   }
 
   /**
