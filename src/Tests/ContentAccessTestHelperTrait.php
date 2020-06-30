@@ -22,9 +22,11 @@ trait ContentAccessTestHelperTrait {
       $access_settings,
       t('Submit')
     );
+    // Both these may be printed:
+    // 'Permissions have been changed' || 'No change' => 'change'
     $this->assertText(
-      t('Your changes have been saved.'),
-      'access rules of content type were updated successfully'
+      t('change'),
+      'submitted access rules of content type'
     );
   }
 
@@ -33,6 +35,7 @@ trait ContentAccessTestHelperTrait {
    *
    */
   public function changeAccessContentTypeKeyword($keyword, $access = TRUE, AccountInterface $user = NULL) {
+    debug($keyword, 'KW');
     $roles = [];
 
     if ($user === NULL) {
