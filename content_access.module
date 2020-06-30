@@ -51,7 +51,7 @@ function content_access_help($route_name, RouteMatchInterface $route_match) {
       ) . '</li></ul>';
       if ($hint_service) {
         $output .= '<p>' . $hint_service->produceHint('content_access',
-          'https://drupal.org/node/1194974', TRUE) . '</p>';
+          'https://www.drupal.org/docs/7/modules/content-access', TRUE) . '</p>';
       }
       else {
         $output .= '<p>' .t('If you install and enable the module <a href=":url"><strong>Advanced Help Hint</strong></a>, you will get more help for <strong>Content Access</strong>.', [
