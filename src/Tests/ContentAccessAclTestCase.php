@@ -91,7 +91,7 @@ class ContentAccessAclTestCase extends WebTestBase {
 
     // Allow access for test user.
     $edit = [
-      'acl[view][add]' => $this->test_user->getUsername(),
+      'acl[view][add]' => $this->test_user->getAccountName(),
     ];
     $this->drupalPostForm('node/'. $this->node1->id() . '/access', $edit, t('Add User'));
     $this->drupalPostForm(NULL, [], t('Submit'));
@@ -136,7 +136,7 @@ class ContentAccessAclTestCase extends WebTestBase {
 
     // Allow edit access for test user.
     $edit = [
-      'acl[update][add]' => $this->test_user->getUsername(),
+      'acl[update][add]' => $this->test_user->getAccountName(),
     ];
     $this->drupalPostForm('node/' . $this->node1->id() . '/access', $edit, t('Add User'));
     $this->drupalPostForm(NULL, [], t('Submit'));
@@ -181,7 +181,7 @@ class ContentAccessAclTestCase extends WebTestBase {
 
     // Allow delete access for test user.
     $edit = [
-      'acl[delete][add]' => $this->test_user->getUsername(),
+      'acl[delete][add]' => $this->test_user->getAccountName(),
     ];
     $this->drupalPostForm('node/' . $this->node1->id() . '/access', $edit, t('Add User'));
     $this->drupalPostForm(NULL, [], t('Submit'));
