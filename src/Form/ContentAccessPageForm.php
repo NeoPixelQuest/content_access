@@ -126,7 +126,8 @@ class ContentAccessPageForm extends FormBase {
     }
 
     // Apply new settings.
-    \Drupal::entityTypeManager()->getAccessControlHandler('node')->writeGrants($node);
+    $grants = \Drupal::entityTypeManager()->getAccessControlHandler('node')->acquireGrants($node);
+    \Drupal::service('node.grant_storage')->write($node, $grants);
     \Drupal::moduleHandler()->invokeAll('per_node', $settings);
 
     foreach (Cache::getBins() as $service_id => $cache_backend) {
@@ -145,7 +146,9 @@ class ContentAccessPageForm extends FormBase {
   function pageResetSubmit(array &$form, FormStateInterface $form_state) {
     $storage = $form_state->getStorage();
     content_access_delete_per_node_settings($storage['node']);
-    \Drupal::entityTypeManager()->getAccessControlHandler('node')->writeGrants($storage['node']);
+    $node = $storage['node'];
+    $grants = \Drupal::entityTypeManager()->getAccessControlHandler('node')->acquireGrants($node);
+    \Drupal::service('node.grant_storage')->write($node, $grants);
 
     $this->messenger()->addMessage(t('The permissions have been reset to the content type defaults.'));
   }

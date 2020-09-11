@@ -757,7 +757,8 @@ function content_access_mass_update($types) {
 
     foreach ($records as $node) {
       $node = Node::load($node->nid);
-      \Drupal::entityTypeManager()->getAccessControlHandler('node')->writeGrants($node);
+      $grants = \Drupal::entityTypeManager()->getAccessControlHandler('node')->acquireGrants($node);
+      \Drupal::service('node.grant_storage')->write($node, $grants);
     }
 
     foreach (Cache::getBins() as $service_id => $cache_backend) {
