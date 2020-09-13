@@ -11,6 +11,11 @@ use Drupal\user\Entity\Role;
  */
 trait ContentAccessTestHelperTrait {
 
+  /**
+   * Role ID for authenticated users.
+   *
+   * @var string
+   */
   protected $rid = AccountInterface::AUTHENTICATED_ROLE;
 
   /**
@@ -28,7 +33,10 @@ trait ContentAccessTestHelperTrait {
   }
 
   /**
-   * Change access permissions for a content type by a given keyword for the role of the user.
+   * Access keyword for content type.
+   *
+   * Change access permissions for a content type by a given keyword for the
+   * role of the user.
    */
   public function changeAccessContentTypeKeyword($keyword, $access = TRUE, AccountInterface $user = NULL) {
     $roles = [];
@@ -63,7 +71,10 @@ trait ContentAccessTestHelperTrait {
   }
 
   /**
-   * Change access permissions for a node by a given keyword (view, update or delete).
+   * Access keyword for node.
+   *
+   * Change access permissions for a node by a given keyword (view, update
+   * or delete).
    */
   public function changeAccessNodeKeyword(NodeInterface $node, $keyword, $access = TRUE) {
     $user = $this->testUser;
