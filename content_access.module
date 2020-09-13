@@ -19,7 +19,6 @@ use Drupal\Core\Cache\Cache;
 use Drupal\user\RoleInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Url;
-use Drupal\Core\Link;
 use Drupal\user\Entity\Role;
 use Drupal\node\Entity\Node;
 
@@ -46,7 +45,7 @@ function content_access_help($route_name, RouteMatchInterface $route_match) {
       ) . '</li>';
       $output .= '<li>' . t('Optionally you can enable  role based access control settings per <em>content node</em>.') . '</li>';
       $output .= '<li>' . t('Access control can be further customized per <em>user</em> if you have the <a href=":url"><strong>ACL</strong></a> module enabled.', [
-       ':url' => Url::fromUri('https://www.drupal.org/project/acl/')->toString(),
+        ':url' => Url::fromUri('https://www.drupal.org/project/acl/')->toString(),
       ]
       ) . '</li></ul>';
       if ($hint_service) {
@@ -54,10 +53,10 @@ function content_access_help($route_name, RouteMatchInterface $route_match) {
           'https://www.drupal.org/docs/7/modules/content-access', TRUE) . '</p>';
       }
       else {
-        $output .= '<p>' .t('If you install and enable the module <a href=":url"><strong>Advanced Help Hint</strong></a>, you will get more help for <strong>Content Access</strong>.', [
-            ':url' => Url::fromUri('https://www.drupal.org/project/advanced_help_hint')->toString(),
-	]
-	) . '</p>';
+        $output .= '<p>' . t('If you install and enable the module <a href=":url"><strong>Advanced Help Hint</strong></a>, you will get more help for <strong>Content Access</strong>.', [
+          ':url' => Url::fromUri('https://www.drupal.org/project/advanced_help_hint')->toString(),
+        ]
+        ) . '</p>';
       }
       return $output;
   }
@@ -222,7 +221,7 @@ function content_access_disabling($set = NULL) {
  * @param $type_name
  *   The name of the content type to return settings for.
  *
- * @return
+ * @return mixed
  *   The value of the given setting or an array of all settings.
  */
 function content_access_get_settings($setting, $type_name) {
@@ -278,7 +277,10 @@ function content_access_available_settings() {
  */
 function content_access_get_setting_defaults($type) {
   $defaults = [];
-  $defaults['view'] = $defaults['view_own'] = [AccountInterface::ANONYMOUS_ROLE, AccountInterface::AUTHENTICATED_ROLE];
+  $defaults['view'] = $defaults['view_own'] = [
+    AccountInterface::ANONYMOUS_ROLE,
+    AccountInterface::AUTHENTICATED_ROLE,
+  ];
   foreach (['update', 'delete'] as $op) {
     $defaults[$op] = content_access_get_permission_access(content_access_get_permission_by_op($op, $type));
     $defaults[$op . '_own'] = content_access_get_permission_access(content_access_get_permission_by_op($op . '_own', $type));
@@ -739,7 +741,8 @@ function _content_access_remove_acls($type) {
  * Mass updates node access records for nodes of the given types.
  * @param $types
  *   An array of content type names.
- * @return
+ *
+ * @return bool
  *   Whether the operation has been processed successfully or postponed.
  */
 function content_access_mass_update($types) {
@@ -775,6 +778,7 @@ function content_access_mass_update($types) {
 
 /**
  * Submit callback for the user permissions form.
+ *
  * Trigger changes to node permissions to rebuild our grants.
  */
 function content_access_user_admin_perm_submit($form, FormStateInterface $form_state) {
@@ -786,7 +790,7 @@ function content_access_user_admin_perm_submit($form, FormStateInterface $form_s
       foreach (user_roles() as $rid => $role) {
         $values = $form_state->getValues();
         if (isset($values[$rid]) && in_array($perm, $form['checkboxes'][$rid]['#default_value']) != in_array($perm, $values[$rid])) {
-          // permission changed.
+          // Permission changed.
           $types[$type] = node_type_get_names();
           continue 2;
 

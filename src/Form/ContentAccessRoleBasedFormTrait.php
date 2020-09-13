@@ -59,8 +59,14 @@ trait ContentAccessRoleBasedFormTrait {
       ];
 
       $form['per_role'][$op]['#process'] = [
-        ['\Drupal\Core\Render\Element\Checkboxes', 'processCheckboxes'],
-        ['\Drupal\content_access\Form\ContentAccessRoleBasedFormTrait', 'disableCheckboxes'],
+        [
+          '\Drupal\Core\Render\Element\Checkboxes',
+          'processCheckboxes',
+        ],
+        [
+          '\Drupal\content_access\Form\ContentAccessRoleBasedFormTrait',
+          'disableCheckboxes',
+        ],
       ];
     }
 
