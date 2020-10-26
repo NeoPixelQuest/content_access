@@ -549,7 +549,7 @@ function content_access_delete_per_node_settings(NodeInterface $node) {
     ->execute();
 
   // Clear the cache.
-  content_access_per_node_setting(NULL, $node, FALSE);
+  content_access_per_node_setting(NULL, $node);
 
   // Delete possible acl settings.
   if (\Drupal::moduleHandler()->moduleExists('acl')) {
