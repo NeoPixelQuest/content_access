@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   id = "content_access_action_grant_node_permissions",
  *   label = @Translation("Grant access by role"),
  *   category = @Translation("Content Access"),
- *   context = {
+ *   context_definitions = {
  *     "node" = @ContextDefinition("entity:node",
  *       label = @Translation("Content"),
  *       description = @Translation("Grant access to the following content.")
