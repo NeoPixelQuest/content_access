@@ -6,4 +6,4 @@ package: 'Access control'
 dependencies:
   - drupal:node
 test_dependencies:
-  - drupal:acl
+  - acl:acl
