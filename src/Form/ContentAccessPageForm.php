@@ -190,7 +190,7 @@ class ContentAccessPageForm extends FormBase {
     // xxxx
     // route: node.configure_rebuild_confirm:
     // path:  '/admin/reports/status/rebuild'.
-    $this->messenger()->addMessage($this->t('Your changes have been saved. You may have to <a href=":rebuild">rebuild permissions</a> for your changes to take effect.',
+    $this->messenger()->addMessage($this->t('Your changes have been saved. You may have to <a href=":rebuild">rebuild permisions</a> for your changes to take effect.',
       [':rebuild' => Url::FromRoute('node.configure_rebuild_confirm')->ToString()]));
   }
 

@@ -9,7 +9,7 @@ namespace Drupal\content_access\Plugin\RulesAction;
  *   id = "content_access_action_user_revoke",
  *   label = @Translation("Revoke access by user"),
  *   category = @Translation("Content Access User"),
- *   context_definitions = {
+ *   context = {
  *     "node" = @ContextDefinition("entity:node",
  *       label = @Translation("Content"),
  *       description = @Translation("Revoke access to the following content."),

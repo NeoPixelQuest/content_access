@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   id = "content_access_action_revoke_node_permissions",
  *   label = @Translation("Revoke access by role"),
  *   category = @Translation("Content Access"),
- *   context_definitions = {
+ *   context = {
  *     "node" = @ContextDefinition("entity:node",
  *       label = @Translation("Content"),
  *       description = @Translation("Revoke access from the following content.")
