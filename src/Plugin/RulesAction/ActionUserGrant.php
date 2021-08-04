@@ -9,7 +9,7 @@ namespace Drupal\content_access\Plugin\RulesAction;
  *   id = "content_access_action_user_grant",
  *   label = @Translation("Grant access by user"),
  *   category = @Translation("Content Access User"),
- *   context = {
+ *   context_definitions = {
  *     "node" = @ContextDefinition("entity:node",
  *       label = @Translation("Content"),
  *       description = @Translation("Grant access to the following content.")
