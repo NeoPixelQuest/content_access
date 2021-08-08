@@ -181,7 +181,7 @@ class ContentAccessAdminSettingsForm extends FormBase {
         $this->messenger()->addMessage($this->t('Permissions have been changed for the content type @types.<br />You may have to <a href=":rebuild">rebuild permissions</a> for your changes to take effect.',
         [
           '@types' => $node_types[$node_type],
-          ':rebuild' => Url::FromRoute('node.configure_rebuild_confirm')->ToString(),
+          ':rebuild' => Url::fromRoute('node.configure_rebuild_confirm')->toString(),
         ]));
       }
     }
