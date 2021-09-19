@@ -26,7 +26,7 @@ trait ContentAccessTestHelperTrait {
     $this->submitForm($accessSettings, 'Submit');
     // Both these may be printed:
     // 'Permissions have been changed' || 'No change' => 'change'.
-    $this->assertSession()->pageTextContains(t('change'));
+    $this->assertSession()->pageTextContains('change');
   }
 
   /**
@@ -94,7 +94,7 @@ trait ContentAccessTestHelperTrait {
   public function changeAccessNode(NodeInterface $node, $accessSettings) {
     $this->drupalGet('node/' . $node->id() . '/access');
     $this->submitForm($accessSettings, 'Submit');
-    $this->assertSession()->pageTextContains(t('Your changes have been saved.'));
+    $this->assertSession()->pageTextContains('Your changes have been saved.');
   }
 
 }

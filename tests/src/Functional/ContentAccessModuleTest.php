@@ -2,7 +2,6 @@
 
 namespace Drupal\Tests\content_access\Functional;
 
-use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Tests\BrowserTestBase;
 
 /**
@@ -12,7 +11,6 @@ use Drupal\Tests\BrowserTestBase;
  */
 class ContentAccessModuleTest extends BrowserTestBase {
   use ContentAccessTestHelperTrait;
-  use StringTranslationTrait;
 
   /**
    * Modules to enable.
@@ -106,12 +104,12 @@ class ContentAccessModuleTest extends BrowserTestBase {
     // Logout admin and try to access the node anonymously.
     $this->drupalLogout();
     $this->drupalGet('node/' . $this->node1->id());
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
 
     // Login test user, view node, access must be denied.
     $this->drupalLogin($this->testUser);
     $this->drupalGet('node/' . $this->node1->id());
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
 
     // Login admin and grant access for viewing to the test user.
     $this->drupalLogin($this->adminUser);
@@ -121,12 +119,12 @@ class ContentAccessModuleTest extends BrowserTestBase {
     // access must be denied again.
     $this->drupalLogout();
     $this->drupalGet('node/' . $this->node1->id());
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
 
     // Login test user, view node, access must be granted.
     $this->drupalLogin($this->testUser);
     $this->drupalGet('node/' . $this->node1->id());
-    $this->assertSession()->pageTextNotContains($this->t('Access denied'));
+    $this->assertSession()->pageTextNotContains('Access denied');
 
     // Login admin and enable per node access.
     $this->drupalLogin($this->adminUser);
@@ -138,18 +136,18 @@ class ContentAccessModuleTest extends BrowserTestBase {
     // Logout admin and try to access both nodes anonymously.
     $this->drupalLogout();
     $this->drupalGet('node/' . $this->node1->id());
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
     $this->drupalGet('node/' . $this->node2->id());
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
 
     // Login test user, view node1, access must be granted.
     $this->drupalLogin($this->testUser);
     $this->drupalGet('node/' . $this->node1->id());
-    $this->assertSession()->pageTextNotContains($this->t('Access denied'));
+    $this->assertSession()->pageTextNotContains('Access denied');
 
     // View node2, access must be denied.
     $this->drupalGet('node/' . $this->node2->id());
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
 
     // Login admin, swap permissions between content type and node2.
     $this->drupalLogin($this->adminUser);
@@ -163,18 +161,18 @@ class ContentAccessModuleTest extends BrowserTestBase {
     // Logout admin and try to access both nodes anonymously.
     $this->drupalLogout();
     $this->drupalGet('node/' . $this->node1->id());
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
     $this->drupalGet('node/' . $this->node2->id());
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
 
     // Login test user, view node1, access must be denied.
     $this->drupalLogin($this->testUser);
     $this->drupalGet('node/' . $this->node1->id());
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
 
     // View node2, access must be granted.
     $this->drupalGet('node/' . $this->node2->id());
-    $this->assertSession()->pageTextNotContains($this->t('Access denied'));
+    $this->assertSession()->pageTextNotContains('Access denied');
   }
 
   /**
@@ -184,12 +182,12 @@ class ContentAccessModuleTest extends BrowserTestBase {
     // Logout admin and try to edit the node anonymously.
     $this->drupalLogout();
     $this->drupalGet('node/' . $this->node1->id() . '/edit');
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
 
     // Login test user, edit node, access must be denied.
     $this->drupalLogin($this->testUser);
     $this->drupalGet('node/' . $this->node1->id() . '/edit');
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
 
     // Login admin and grant access for editing to the test user.
     $this->drupalLogin($this->adminUser);
@@ -199,12 +197,12 @@ class ContentAccessModuleTest extends BrowserTestBase {
     // access must be denied again.
     $this->drupalLogout();
     $this->drupalGet('node/' . $this->node1->id() . '/edit');
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
 
     // Login test user, edit node, access must be granted.
     $this->drupalLogin($this->testUser);
     $this->drupalGet('node/' . $this->node1->id() . '/edit');
-    $this->assertSession()->pageTextNotContains($this->t('Access denied'));
+    $this->assertSession()->pageTextNotContains('Access denied');
 
     // Login admin and enable per node access.
     $this->drupalLogin($this->adminUser);
@@ -213,25 +211,25 @@ class ContentAccessModuleTest extends BrowserTestBase {
     // Restrict access for this content type for the test user.
     $this->changeAccessContentTypeKeyword('update', FALSE);
 
-    // Allow acces for node1 only.
+    // Allow access for node1 only.
     $this->changeAccessNodeKeyword($this->node1, 'update');
     $this->changeAccessNodeKeyword($this->node2, 'update', FALSE);
 
     // Logout admin and try to edit both nodes anonymously.
     $this->drupalLogout();
     $this->drupalGet('node/' . $this->node1->id() . '/edit');
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
     $this->drupalGet('node/' . $this->node2->id() . '/edit');
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
 
     // Login test user, edit node1, access must be granted.
     $this->drupalLogin($this->testUser);
     $this->drupalGet('node/' . $this->node1->id() . '/edit');
-    $this->assertSession()->pageTextNotContains($this->t('Access denied'));
+    $this->assertSession()->pageTextNotContains('Access denied');
 
     // Edit node2, access must be denied.
     $this->drupalGet('node/' . $this->node2->id() . '/edit');
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
 
     // Login admin, swap permissions between node1 and node2.
     $this->drupalLogin($this->adminUser);
@@ -244,18 +242,18 @@ class ContentAccessModuleTest extends BrowserTestBase {
     // Logout admin and try to edit both nodes anonymously.
     $this->drupalLogout();
     $this->drupalGet('node/' . $this->node1->id() . '/edit');
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
     $this->drupalGet('node/' . $this->node2->id() . '/edit');
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
 
     // Login test user, edit node1, access must be denied.
     $this->drupalLogin($this->testUser);
     $this->drupalGet('node/' . $this->node1->id() . '/edit');
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
 
     // Edit node2, access must be granted.
     $this->drupalGet('node/' . $this->node2->id() . '/edit');
-    $this->assertSession()->pageTextNotContains($this->t('Access denied'));
+    $this->assertSession()->pageTextNotContains('Access denied');
   }
 
   /**
@@ -265,12 +263,12 @@ class ContentAccessModuleTest extends BrowserTestBase {
     // Logout admin and try to delete the node anonymously.
     $this->drupalLogout();
     $this->drupalGet('node/' . $this->node1->id() . '/delete');
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
 
     // Login test user, delete node, access must be denied.
     $this->drupalLogin($this->testUser);
     $this->drupalGet('node/' . $this->node1->id() . '/delete');
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
 
     // Login admin and grant access for deleting to the test user.
     $this->drupalLogin($this->adminUser);
@@ -281,17 +279,17 @@ class ContentAccessModuleTest extends BrowserTestBase {
     // access must be denied again.
     $this->drupalLogout();
     $this->drupalGet('node/' . $this->node1->id() . '/delete');
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
 
     // Login test user, delete node, access must be granted.
     $this->drupalLogin($this->testUser);
     $this->drupalGet('node/' . $this->node1->id() . '/delete');
     $this->submitForm([], 'Delete');
-    $this->assertRaw(
-      $this->t('%node has been deleted', ['%node' => $this->node1->getTitle()]),
-      'Test node was deleted successfully by test user'
-    );
 
+    // Check that the test node was deleted successfully by testUser.
+    $title = $this->node1->getTitle();
+    $this->assertSession()->pageTextContains("$title has been deleted");
+ 
     // Login admin and recreate test node1.
     $this->drupalLogin($this->adminUser);
     $this->node1 = $this->drupalCreateNode(
@@ -304,49 +302,49 @@ class ContentAccessModuleTest extends BrowserTestBase {
     // Restrict access for this content type for the test user.
     $this->changeAccessContentTypeKeyword('delete', FALSE);
 
-    // Allow acces for node1 only.
+    // Allow access for node1 only.
     $this->changeAccessNodeKeyword($this->node1, 'delete');
     $this->changeAccessNodeKeyword($this->node2, 'delete', FALSE);
 
     // Logout admin and try to delete both nodes anonymously.
     $this->drupalLogout();
     $this->drupalGet('node/' . $this->node1->id() . '/delete');
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
     $this->drupalGet('node/' . $this->node2->id() . '/delete');
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
 
     // Login test user, delete node1, access must be granted.
     $this->drupalLogin($this->testUser);
     $this->drupalGet('node/' . $this->node1->id() . '/delete');
-    $this->assertSession()->pageTextNotContains($this->t('Access denied'));
+    $this->assertSession()->pageTextNotContains('Access denied');
 
     // Delete node2, access must be denied.
     $this->drupalGet('node/' . $this->node2->id() . '/delete');
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
 
     // Login admin, swap permissions between node1 and node2.
     $this->drupalLogin($this->adminUser);
 
     // Grant delete access to node2.
     $this->changeAccessNodeKeyword($this->node2, 'delete');
-    // Restrict delete acces to node1.
+    // Restrict delete access to node1.
     $this->changeAccessNodeKeyword($this->node1, 'delete', FALSE);
 
     // Logout admin and try to delete both nodes anonymously.
     $this->drupalLogout();
     $this->drupalGet('node/' . $this->node1->id() . '/delete');
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
     $this->drupalGet('node/' . $this->node2->id() . '/delete');
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
 
     // Login test user, delete node1, access must be denied.
     $this->drupalLogin($this->testUser);
     $this->drupalGet('node/' . $this->node1->id() . '/delete');
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
 
     // Delete node2, access must be granted.
     $this->drupalGet('node/' . $this->node2->id() . '/delete');
-    $this->assertSession()->pageTextNotContains($this->t('Access denied'));
+    $this->assertSession()->pageTextNotContains('Access denied');
   }
 
   /**
@@ -380,27 +378,27 @@ class ContentAccessModuleTest extends BrowserTestBase {
     // Logout admin and try to access both nodes anonymously.
     $this->drupalLogout();
     $this->drupalGet('node/' . $this->node1->id());
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
     $this->drupalGet('node/' . $this->node2->id());
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
 
     // Login test user 1, view node1, access must be granted.
     $this->drupalLogin($testUser1);
     $this->drupalGet('node/' . $this->node1->id());
-    $this->assertSession()->pageTextNotContains($this->t('Access denied'));
+    $this->assertSession()->pageTextNotContains('Access denied');
 
     // View node2, access must be denied.
     $this->drupalGet('node/' . $this->node2->id());
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
 
     // Login test user 2, view node1, access must be denied.
     $this->drupalLogin($testUser2);
     $this->drupalGet('node/' . $this->node1->id());
-    $this->assertSession()->pageTextContains($this->t('Access denied'));
+    $this->assertSession()->pageTextContains('Access denied');
 
     // View node2, access must be granted.
     $this->drupalGet('node/' . $this->node2->id());
-    $this->assertSession()->pageTextNotContains($this->t('Access denied'));
+    $this->assertSession()->pageTextNotContains('Access denied');
   }
 
 }
