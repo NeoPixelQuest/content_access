@@ -123,8 +123,9 @@ class ContentAccessTinyTest extends BrowserTestBase {
     $edit = [
       'acl[view][add]' => $this->testUser->getAccountName(),
     ];
-    $this->drupalPostForm('node/' . $this->node1->id() . '/access', $edit, $this->t('Add User'));
-    $this->drupalPostForm(NULL, [], $this->t('Submit'));
+    $this->drupalGet('node/' . $this->node1->id() . '/access');
+    $this->submitForm($edit, 'Add User');
+    $this->submitForm([], 'Submit');
 
     // Logout admin, try to access the node anonymously.
     $this->drupalLogout();
@@ -169,9 +170,9 @@ class ContentAccessTinyTest extends BrowserTestBase {
   $edit = [
   'acl[update][add]' => $this->testUser->getAccountName(),
   ];
-  $this->drupalPostForm('node/' . $this->node1->id() . '/access', $edit,
-  t('Add User'));
-  $this->drupalPostForm(NULL, [], t('Submit'));
+  $this->drupalGet('node/' . $this->node1->id() . '/access');
+  $this->submitForm($edit, 'Add User');
+  $this->submitForm([], 'Submit');
 
   // Logout admin, try to edit the node anonymously.
   $this->drupalLogout();
@@ -217,9 +218,9 @@ class ContentAccessTinyTest extends BrowserTestBase {
   $edit = [
   'acl[delete][add]' => $this->testUser->getAccountName(),
   ];
-  $this->drupalPostForm('node/' . $this->node1->id() . '/access', $edit,
-  t('Add User'));
-  $this->drupalPostForm(NULL, [], t('Submit'));
+  $this->drupalGet('node/' . $this->node1->id() . '/access');
+  $this->submitForm($edit, 'Add User');
+  $this->submitForm([], 'Submit');
 
   // Logout admin, try to delete the node anonymously.
   $this->drupalLogout();

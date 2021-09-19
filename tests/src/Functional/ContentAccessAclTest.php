@@ -123,8 +123,9 @@ class ContentAccessAclTest extends BrowserTestBase {
     $edit = [
       'acl[view][add]' => $this->testUser->getAccountName(),
     ];
-    $this->drupalPostForm('node/' . $this->node1->id() . '/access', $edit, $this->t('edit-acl-view-add-button'));
-    $this->drupalPostForm(NULL, [], $this->t('Submit'));
+    $this->drupalGet('node/' . $this->node1->id() . '/access');
+    $this->submitForm($edit, 'edit-acl-view-add-button');
+    $this->submitForm([], 'Submit');
 
     // Logout admin, try to access the node anonymously.
     $this->drupalLogout();
@@ -168,8 +169,9 @@ class ContentAccessAclTest extends BrowserTestBase {
     $edit = [
       'acl[update][add]' => $this->testUser->getAccountName(),
     ];
-    $this->drupalPostForm('node/' . $this->node1->id() . '/access', $edit, $this->t('edit-acl-update-add-button'));
-    $this->drupalPostForm(NULL, [], $this->t('Submit'));
+    $this->drupalGet('node/' . $this->node1->id() . '/access');
+    $this->submitForm($edit, 'edit-acl-update-add-button');
+    $this->submitForm([], 'Submit');
 
     // Logout admin, try to edit the node anonymously.
     $this->drupalLogout();
@@ -213,8 +215,9 @@ class ContentAccessAclTest extends BrowserTestBase {
     $edit = [
       'acl[delete][add]' => $this->testUser->getAccountName(),
     ];
-    $this->drupalPostForm('node/' . $this->node1->id() . '/access', $edit, $this->t('edit-acl-delete-add-button'));
-    $this->drupalPostForm(NULL, [], $this->t('Submit'));
+    $this->drupalGet('node/' . $this->node1->id() . '/access');
+    $this->submitForm($edit, 'edit-acl-delete-add-button');
+    $this->submitForm([], 'Submit');
 
     // Logout admin, try to delete the node anonymously.
     $this->drupalLogout();

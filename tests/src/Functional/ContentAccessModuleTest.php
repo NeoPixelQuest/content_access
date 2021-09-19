@@ -285,11 +285,8 @@ class ContentAccessModuleTest extends BrowserTestBase {
 
     // Login test user, delete node, access must be granted.
     $this->drupalLogin($this->testUser);
-    $this->drupalPostForm(
-      'node/' . $this->node1->id() . '/delete',
-      [],
-      'Delete'
-    );
+    $this->drupalGet('node/' . $this->node1->id() . '/delete');
+    $this->submitForm([], 'Delete');
     $this->assertRaw(
       $this->t('%node has been deleted', ['%node' => $this->node1->getTitle()]),
       'Test node was deleted successfully by test user'
