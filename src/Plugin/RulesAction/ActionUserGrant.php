@@ -9,6 +9,7 @@ namespace Drupal\content_access\Plugin\RulesAction;
  *   id = "content_access_action_user_grant",
  *   label = @Translation("Grant access by user"),
  *   category = @Translation("Content Access User"),
+ *   provider = "acl",
  *   context_definitions = {
  *     "node" = @ContextDefinition("entity:node",
  *       label = @Translation("Content"),
@@ -28,9 +29,8 @@ namespace Drupal\content_access\Plugin\RulesAction;
  *       label = @Translation("Grant delete access"),
  *       description = @Translation("Grant delete access to the following user."),
  *       required = FALSE
- *     )
- *   },
- *   deriver = "\Drupal\content_access\Plugin\Deriver\RulesActionUserAclDeriver"
+ *     ),
+ *   }
  * )
  */
 class ActionUserGrant extends ContentAccessUserRulesActionBase {
