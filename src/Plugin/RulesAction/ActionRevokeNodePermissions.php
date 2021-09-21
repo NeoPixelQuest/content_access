@@ -26,7 +26,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   }
  * )
  *
- * @todo: Add option_list parameter to permissions after it becomes available.
+ * @todo Add option_list parameter to permissions after it becomes available.
  */
 class ActionRevokeNodePermissions extends RulesActionBase implements ContainerFactoryPluginInterface {
   use ActionCommonTrait;

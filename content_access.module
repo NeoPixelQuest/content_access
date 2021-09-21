@@ -718,9 +718,8 @@ function _content_access_get_node_permissions($type) {
 function content_access_get_role_gid($role) {
   $config = \Drupal::configFactory()->getEditable('content_access.settings');
   $roles_gids = $config->get('content_access_roles_gids');
-  
   if (empty($roles_gids) || !array_key_exists($role, $roles_gids)) {
-    return null;
+    return NULL;
   }
 
   return $roles_gids[$role];

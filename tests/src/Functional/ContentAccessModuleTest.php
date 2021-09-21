@@ -289,7 +289,7 @@ class ContentAccessModuleTest extends BrowserTestBase {
     // Check that the test node was deleted successfully by testUser.
     $title = $this->node1->getTitle();
     $this->assertSession()->pageTextContains("$title has been deleted");
- 
+
     // Login admin and recreate test node1.
     $this->drupalLogin($this->adminUser);
     $this->node1 = $this->drupalCreateNode(
