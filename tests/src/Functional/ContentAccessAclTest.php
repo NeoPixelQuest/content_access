@@ -14,11 +14,9 @@ class ContentAccessAclTest extends BrowserTestBase {
   use ContentAccessTestHelperTrait;
 
   /**
-   * Modules to enable.
-   *
-   * @var array
+   * {@inheritdoc}
    */
-  public static $modules = ['content_access', 'acl'];
+  protected static $modules = ['content_access', 'acl'];
 
   /**
    * A user with permission to non administer.
@@ -54,7 +52,7 @@ class ContentAccessAclTest extends BrowserTestBase {
   protected $defaultTheme = 'classy';
 
   /**
-   * Setup configuration before each test.
+   * {@inheritdoc}
    */
   protected function setUp() {
     parent::setUp();

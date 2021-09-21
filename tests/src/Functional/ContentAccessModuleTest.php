@@ -13,11 +13,9 @@ class ContentAccessModuleTest extends BrowserTestBase {
   use ContentAccessTestHelperTrait;
 
   /**
-   * Modules to enable.
-   *
-   * @var array
+   * {@inheritdoc}
    */
-  public static $modules = ['content_access'];
+  protected static $modules = ['content_access'];
 
   /**
    * A user with permission to non administer.
@@ -62,7 +60,7 @@ class ContentAccessModuleTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  protected function setUp() {
     parent::setUp();
 
     // Create test user with separate role.
