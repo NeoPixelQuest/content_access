@@ -65,7 +65,12 @@ function content_access_node_grants(AccountInterface $account, $op) {
   $gids = [];
   $roles = $account->getRoles();
   foreach ($roles as $role) {
-    $gids[] = content_access_get_role_gid($role);
+    $gid = content_access_get_role_gid($role);
+    if (!$gid) {
+      continue;
+    }
+
+    $gids[] = $gid;
   }
 
   return [
@@ -88,6 +93,9 @@ function content_access_node_access_records(NodeInterface $node) {
     foreach (['view', 'update', 'delete'] as $op) {
       foreach (content_access_get_rids_per_node_op($op, $node) as $rid) {
         $gid = content_access_get_role_gid($rid);
+        if (!$gid) {
+          continue;
+        }
         $grants[$gid]['grant_' . $op] = 1;
       }
     }
@@ -346,6 +354,9 @@ function content_access_get_type_grant(NodeInterface $node) {
     // edit and delete.
     foreach (content_access_get_settings('view', $node_type) as $rid) {
       $gid = content_access_get_role_gid($rid);
+      if (!$gid) {
+        continue;
+      }
       $grant['grant_view'] = 1;
       $grants[] = content_access_proccess_grant($grant, $gid, $node);
     }
