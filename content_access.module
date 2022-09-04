@@ -564,7 +564,7 @@ function content_access_delete_per_node_settings(NodeInterface $node) {
 
   // Delete possible acl settings.
   if (\Drupal::moduleHandler()->moduleExists('acl')) {
-    module_load_include('inc', 'content_access', 'content_access.admin');
+    \Drupal::modulehandler()->load_include('inc', 'content_access', 'content_access.admin');
     foreach (['view', 'update', 'delete'] as $op) {
       $acl_id = content_access_get_acl_id($node, $op);
       acl_delete_acl($acl_id);
