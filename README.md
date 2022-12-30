@@ -78,10 +78,7 @@ None.
 * [**Advanced Help**][6]:
   When this module is enabled, the project's `README.md` will be
   displayed when you visit `help/content_access/README.md`.
-* [**Markdown**][8]:
-  When this module is enabled, display of the project's `README.md`
-  will be rendered with the markdown filter.
-* [**Node Export**][N]
+* [**Node Export**][8]
   To export content access rules.
 * [**Rules**][5]:
   To configure rule-based access permissions.
@@ -198,8 +195,7 @@ about "Advanced access control".
 [5]: https://www.drupal.org/project/rules
 [6]: https://www.drupal.org/project/advanced_help
 [7]: https://www.drupal.org/project/advanced_help_hint
-[8]: https://www.drupal.org/project/markdown
-[N]: https://www.drupal.org/project/node_export
+[8]: https://www.drupal.org/project/node_export
 [9]: https://www.drupal.org/docs/extending-drupal/installing-drupal-modules
 [10]: https://www.drupal.org/u/fago
 [11]: https://www.drupal.org/u/good_man
