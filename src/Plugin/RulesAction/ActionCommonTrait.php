@@ -17,7 +17,7 @@ trait ActionCommonTrait {
     $config = \Drupal::configFactory()->getEditable('content_access.settings');
 
     $type = $node->getType();
-    $settings = unserialize($config->get('content_access_node_type.' . $type));
+    $settings = unserialize($config->get('content_access_node_type.' . $type) ?? '');
 
     if (isset($settings['per_node']) && $settings['per_node']) {
       return TRUE;
