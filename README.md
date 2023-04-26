@@ -47,8 +47,6 @@ Features:
 * It reuses existing functionality instead of reimplementing it. So
   one can install the **ACL** module and set per user access control
   settings per content node.
-* The project provides conditions and actions for the **Rules**
-  module, which allows one to configure rule-based access permissions.
 * It optimizes the written content node grants, so that only the
   necessary grants are written.  This is important for the
   performance of your site.
@@ -78,10 +76,6 @@ None.
 * [**Advanced Help**][6]:
   When this module is enabled, the project's `README.md` will be
   displayed when you visit `help/content_access/README.md`.
-* [**Node Export**][8]
-  To export content access rules.
-* [**Rules**][5]:
-  To configure rule-based access permissions.
 
 
 # INSTALLATION
@@ -192,10 +186,8 @@ about "Advanced access control".
 [2]: https://drupal.org/node/1194974
 [3]: https://drupal.org/project/issues/content_access
 [4]: https://www.drupal.org/project/acl
-[5]: https://www.drupal.org/project/rules
 [6]: https://www.drupal.org/project/advanced_help
 [7]: https://www.drupal.org/project/advanced_help_hint
-[8]: https://www.drupal.org/project/node_export
 [9]: https://www.drupal.org/docs/extending-drupal/installing-drupal-modules
 [10]: https://www.drupal.org/u/fago
 [11]: https://www.drupal.org/u/good_man
