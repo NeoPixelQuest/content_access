@@ -6,6 +6,7 @@ use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\user\Entity\Role;
 use Drupal\user\PermissionHandlerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -120,8 +121,13 @@ class ContentAccessAdminSettingsForm extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $values = $form_state->getValues();
     $storage = $form_state->getStorage();
-    $roles = array_keys(user_roles());
-    $roles_permissions = user_role_permissions($roles);
+    /** @var \Drupal\user\Entity\Role $roles */
+    $roles = Role::loadMultiple();
+    $roles_permissions = [];
+    foreach ($roles as $rid => $role) {
+      $roles_permissions[$rid] = $role->getPermissions();
+    }
+
     $permissions = $this->permissionHandler->getPermissions();
     $node_type = $storage['node_type'];
 

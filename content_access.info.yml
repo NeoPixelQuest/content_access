@@ -1,7 +1,7 @@
 name: Content Access
 type: module
 description: 'Provides flexible content access control.'
-core_version_requirement: ^8.8 || ^9 || ^10
+core_version_requirement: ^9.4 || ^10
 package: 'Access control'
 dependencies:
   - drupal:node
