@@ -107,10 +107,10 @@ class ContentAccessPageForm extends FormBase {
     if ($this->moduleHandler->moduleExists('acl')) {
       // This is disabled when there is no node passed.
       $form['acl'] = [
-        '#type' => 'fieldset',
+        '#type' => 'details',
         '#title' => $this->t('User access control lists'),
         '#description' => $this->t('These settings allow you to grant access to specific users.'),
-        '#collapsible' => TRUE,
+        '#open' => TRUE,
         '#tree' => TRUE,
       ];
 
