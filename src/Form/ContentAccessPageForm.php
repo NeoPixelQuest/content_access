@@ -182,7 +182,7 @@ class ContentAccessPageForm extends FormBase {
     // Apply new settings.
     $grants = $this->entityTypeManager->getAccessControlHandler('node')->acquireGrants($node);
     $this->grantStorage->write($node, $grants);
-    $this->moduleHandler->invokeAll('per_node', [$settings,$node]);
+    $this->moduleHandler->invokeAll('per_node', [$settings, $node]);
 
     foreach (Cache::getBins() as $cache_backend) {
       $cache_backend->deleteAll();
