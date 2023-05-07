@@ -58,6 +58,22 @@ function content_access_help($route_name, RouteMatchInterface $route_match) {
   }
 }
 
+
+/**
+ * Implements hook__ENTITY_TYPE_update().
+ */
+function content_access_user_update(EntityInterface $account) {
+  // Act only if roles have changed.
+  $roles_added = array_diff($account->getRoles(), $account->original->getRoles());
+  $roles_removed = array_diff($account->original->getRoles(), $account->getRoles());
+
+  if (!empty($roles_added) || !empty($roles_removed)) {
+    \Drupal::messenger()->addMessage(t('Your changes have been saved. You may have to <a href=":rebuild">rebuild permissions</a> for your changes to take effect.',
+      [':rebuild' => Url::fromRoute('node.configure_rebuild_confirm')->toString()]));
+  }
+}
+
+
 /**
  * Implements hook_node_grants().
  */
