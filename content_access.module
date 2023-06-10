@@ -172,7 +172,7 @@ function content_access_entity_insert(EntityInterface $entity) {
   $config = \Drupal::configFactory()->getEditable('content_access.settings');
 
   if ($entity instanceof RoleInterface) {
-    $roles_gids = array_flip($config->get('content_access_roles_gids'));
+    $roles_gids = array_flip((array)$config->get('content_access_roles_gids'));
     $roles_gids[] = $entity->id();
     $config->set('content_access_roles_gids', array_flip($roles_gids));
     $config->save();
