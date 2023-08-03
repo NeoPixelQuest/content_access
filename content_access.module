@@ -367,21 +367,19 @@ function content_access_get_type_grant(NodeInterface $node) {
   static $defaults = [];
 
   $node_type = $node->getType();
+  $node_lang = $node->language()->getId();
 
-  if (!isset($defaults[$node_type])) {
+  if (!isset($defaults[$node_type][$node_lang])) {
     $grants = [];
 
     // Only process the 'view' op as node_access() will take care of
     // edit and delete.
     foreach (content_access_get_settings('view', $node_type) as $rid) {
       $gid = content_access_get_role_gid($rid);
-      if (!$gid) {
-        continue;
-      }
       $grant['grant_view'] = 1;
       $grants[] = content_access_proccess_grant($grant, $gid, $node);
     }
-    $defaults[$node_type] = $grants;
+    $defaults[$node_type][$node_lang] = $grants;
   }
 
   // Care for the author grant.
@@ -398,7 +396,7 @@ function content_access_get_type_grant(NodeInterface $node) {
     ];
   }
 
-  return $defaults[$node_type] + $grants;
+  return $defaults[$node_type][$node_lang] + $grants;
 }
 
 /**
