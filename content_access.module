@@ -251,7 +251,7 @@ function content_access_disabling($set = NULL) {
  */
 function content_access_get_settings($setting, $type_name) {
   $config = \Drupal::configFactory()->getEditable('content_access.settings');
-  $settings = unserialize($config->get('content_access_node_type.' . $type_name) ?? '');
+  $settings = unserialize($config->get('content_access_node_type.' . $type_name) ?? '', ['allowed_classes' => FALSE]);
   if (empty($settings)) {
     $settings = [];
   }

@@ -68,7 +68,7 @@ function content_access_update_9201() {
     ->execute();
   // Unserialize all values and save json_encoded value to DB.
   foreach ($settings as $setting) {
-    $setting_array = unserialize($setting->settings);
+    $setting_array = unserialize($setting->settings, ['allowed_classes' => FALSE]);
     $database->update('content_access')
       ->fields([
         'settings' => json_encode($setting_array),
