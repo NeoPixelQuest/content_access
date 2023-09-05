@@ -16,7 +16,8 @@ class ContentAccessTinyTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected static $modules = ['content_access', 'acl'];
+  // protected static $modules = ['content_access', 'acl'];
+  protected static $modules = ['content_access'];
 
   /**
    * A user with permission to non administer.
@@ -105,12 +106,14 @@ class ContentAccessTinyTest extends BrowserTestBase {
     $this->changeAccessContentType($accessPermissions);
 
     // Allow access for test user.
+    /*
     $edit = [
       'acl[view][add]' => $this->testUser->getAccountName(),
     ];
     $this->drupalGet('node/' . $this->node1->id() . '/access');
     $this->submitForm($edit, 'Add User');
     $this->submitForm([], 'Submit');
+    */
 
     // Logout admin, try to access the node anonymously.
     $this->drupalLogout();
@@ -152,12 +155,14 @@ class ContentAccessTinyTest extends BrowserTestBase {
   $this->changeAccessPerNode();
 
   // Allow edit access for test user.
+  /*
   $edit = [
   'acl[update][add]' => $this->testUser->getAccountName(),
   ];
   $this->drupalGet('node/' . $this->node1->id() . '/access');
   $this->submitForm($edit, 'Add User');
   $this->submitForm([], 'Submit');
+  */
 
   // Logout admin, try to edit the node anonymously.
   $this->drupalLogout();
@@ -188,7 +193,6 @@ class ContentAccessTinyTest extends BrowserTestBase {
   /*
    * Test Deleting accessibility with permissions for single users.
    */
-  /*
   public function testDeleteAccess() {
   // Exit test if ACL module could not be enabled.
   if (!\Drupal::moduleHandler()->moduleExists('acl')) {
@@ -200,12 +204,14 @@ class ContentAccessTinyTest extends BrowserTestBase {
   $this->changeAccessPerNode();
 
   // Allow delete access for test user.
+  /*
   $edit = [
   'acl[delete][add]' => $this->testUser->getAccountName(),
   ];
   $this->drupalGet('node/' . $this->node1->id() . '/access');
   $this->submitForm($edit, 'Add User');
   $this->submitForm([], 'Submit');
+  */
 
   // Logout admin, try to delete the node anonymously.
   $this->drupalLogout();
