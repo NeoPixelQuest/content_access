@@ -46,11 +46,8 @@ include:
 #
 # Docs at https://git.drupalcode.org/project/gitlab_templates/-/blob/1.0.x/includes/include.drupalci.variables.yml
 ################
-variables:
-  # Because we need to require the acl module, but that's not compatible with Drupal 10, yet, we test with Drupal 9.
-  # @TODO: Do a matrix build with Drupal 9 with acl and Drupal 10 without acl.
-  # @TODO: Remove this when acl is compatible with Drupal 10.
-  _TARGET_CORE: '9.5.x'
+# variables:
+
 
 
 ###################################################################################
