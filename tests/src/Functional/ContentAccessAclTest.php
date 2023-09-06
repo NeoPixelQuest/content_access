@@ -6,11 +6,11 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Tests\BrowserTestBase;
 
 /**
- * Automated BrowserTest Case for having a tiny test to run fast.
+ * Automated BrowserTest Case for using content access module with acl module.
  *
  * @group Access
  */
-class ContentAccessTinyTest extends BrowserTestBase {
+class ContentAccessAclTest extends BrowserTestBase {
   use ContentAccessTestHelperTrait;
 
   /**
@@ -109,7 +109,7 @@ class ContentAccessTinyTest extends BrowserTestBase {
       'acl[view][add]' => $this->testUser->getAccountName(),
     ];
     $this->drupalGet('node/' . $this->node1->id() . '/access');
-    $this->submitForm($edit, 'Add User');
+    $this->submitForm($edit, 'edit-acl-view-add-button');
     $this->submitForm([], 'Submit');
 
     // Logout admin, try to access the node anonymously.
@@ -137,100 +137,84 @@ class ContentAccessTinyTest extends BrowserTestBase {
     $this->assertSession()->pageTextContains('Access denied');
   }
 
-  /*
+  /**
    * Test Editing accessibility with permissions for single users.
    */
-  /*
   public function testEditAccess() {
-  // Exit test if ACL module could not be enabled.
-  if (!\Drupal::moduleHandler()->moduleExists('acl')) {
-  $this->pass('No ACL module present, skipping test');
-  return;
+    // Enable per node access control.
+    $this->changeAccessPerNode();
+
+    // Allow edit access for test user.
+    $edit = [
+      'acl[update][add]' => $this->testUser->getAccountName(),
+    ];
+    $this->drupalGet('node/' . $this->node1->id() . '/access');
+    $this->submitForm($edit, 'edit-acl-update-add-button');
+    $this->submitForm([], 'Submit');
+
+    // Logout admin, try to edit the node anonymously.
+    $this->drupalLogout();
+    $this->drupalGet('node/' . $this->node1->id() . '/edit');
+    $this->assertSession()->pageTextContains('Access denied');
+
+    // Login test user, edit access should be allowed now.
+    $this->drupalLogin($this->testUser);
+    $this->drupalGet('node/' . $this->node1->id() . '/edit');
+    $this->assertSession()->pageTextNotContains('Access denied');
+
+    // Login admin and disable per node access.
+    $this->drupalLogin($this->adminUser);
+    $this->changeAccessPerNode(FALSE);
+
+    // Logout admin, try to edit the node anonymously.
+    $this->drupalLogout();
+    $this->drupalGet('node/' . $this->node1->id() . '/edit');
+    $this->assertSession()->pageTextContains('Access denied');
+
+    // Login test user, edit access should be denied now.
+    $this->drupalLogin($this->testUser);
+    $this->drupalGet('node/' . $this->node1->id() . '/edit');
+    $this->assertSession()->pageTextContains('Access denied');
   }
 
-  // Enable per node access control.
-  $this->changeAccessPerNode();
-
-  // Allow edit access for test user.
-  $edit = [
-  'acl[update][add]' => $this->testUser->getAccountName(),
-  ];
-  $this->drupalGet('node/' . $this->node1->id() . '/access');
-  $this->submitForm($edit, 'Add User');
-  $this->submitForm([], 'Submit');
-
-  // Logout admin, try to edit the node anonymously.
-  $this->drupalLogout();
-  $this->drupalGet('node/' . $this->node1->id() . '/edit');
-  $this->assertSession()->pageTextContains('Access denied');
-
-  // Login test user, edit access should be allowed now.
-  $this->drupalLogin($this->testUser);
-  $this->drupalGet('node/' . $this->node1->id() . '/edit');
-  $this->assertSession()->pageTextNotContains('Access denied');
-
-  // Login admin and disable per node access.
-  $this->drupalLogin($this->adminUser);
-  $this->changeAccessPerNode(FALSE);
-
-  // Logout admin, try to edit the node anonymously.
-  $this->drupalLogout();
-  $this->drupalGet('node/' . $this->node1->id() . '/edit');
-  $this->assertSession()->pageTextContains('Access denied');
-
-  // Login test user, edit access should be denied now.
-  $this->drupalLogin($this->testUser);
-  $this->drupalGet('node/' . $this->node1->id() . '/edit');
-  $this->assertSession()->pageTextContains('Access denied');
-  }
-   */
-
-  /*
+  /**
    * Test Deleting accessibility with permissions for single users.
    */
-  /*
   public function testDeleteAccess() {
-  // Exit test if ACL module could not be enabled.
-  if (!\Drupal::moduleHandler()->moduleExists('acl')) {
-  $this->pass('No ACL module present, skipping test');
-  return;
+    // Enable per node access control.
+    $this->changeAccessPerNode();
+
+    // Allow delete access for test user.
+    $edit = [
+      'acl[delete][add]' => $this->testUser->getAccountName(),
+    ];
+    $this->drupalGet('node/' . $this->node1->id() . '/access');
+    $this->submitForm($edit, 'edit-acl-delete-add-button');
+    $this->submitForm([], 'Submit');
+
+    // Logout admin, try to delete the node anonymously.
+    $this->drupalLogout();
+    $this->drupalGet('node/' . $this->node1->id() . '/delete');
+    $this->assertSession()->pageTextContains('Access denied');
+
+    // Login test user, delete access should be allowed now.
+    $this->drupalLogin($this->testUser);
+    $this->drupalGet('node/' . $this->node1->id() . '/delete');
+    $this->assertSession()->pageTextNotContains('Access denied');
+
+    // Login admin and disable per node access.
+    $this->drupalLogin($this->adminUser);
+    $this->changeAccessPerNode(FALSE);
+
+    // Logout admin, try to delete the node anonymously.
+    $this->drupalLogout();
+    $this->drupalGet('node/' . $this->node1->id() . '/delete');
+    $this->assertSession()->pageTextContains('Access denied');
+
+    // Login test user, delete access should be denied now.
+    $this->drupalLogin($this->testUser);
+    $this->drupalGet('node/' . $this->node1->id() . '/delete');
+    $this->assertSession()->pageTextContains('Access denied');
   }
-
-  // Enable per node access control.
-  $this->changeAccessPerNode();
-
-  // Allow delete access for test user.
-  $edit = [
-  'acl[delete][add]' => $this->testUser->getAccountName(),
-  ];
-  $this->drupalGet('node/' . $this->node1->id() . '/access');
-  $this->submitForm($edit, 'Add User');
-  $this->submitForm([], 'Submit');
-
-  // Logout admin, try to delete the node anonymously.
-  $this->drupalLogout();
-  $this->drupalGet('node/' . $this->node1->id() . '/delete');
-  $this->assertSession()->pageTextContains('Access denied');
-
-  // Login test user, delete access should be allowed now.
-  $this->drupalLogin($this->testUser);
-  $this->drupalGet('node/' . $this->node1->id() . '/delete');
-  $this->assertSession()->pageTextNotContains('Access denied');
-
-  // Login admin and disable per node access.
-  $this->drupalLogin($this->adminUser);
-  $this->changeAccessPerNode(FALSE);
-
-  // Logout admin, try to delete the node anonymously.
-  $this->drupalLogout();
-  $this->drupalGet('node/' . $this->node1->id() . '/delete');
-  $this->assertSession()->pageTextContains('Access denied');
-
-  // Login test user, delete access should be denied now.
-  $this->drupalLogin($this->testUser);
-  $this->drupalGet('node/' . $this->node1->id() . '/delete');
-  $this->assertSession()->pageTextContains('Access denied');
-  }
-   */
 
 }
