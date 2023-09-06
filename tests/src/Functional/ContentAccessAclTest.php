@@ -186,7 +186,7 @@ class ContentAccessAclTest extends BrowserTestBase {
 
     // Allow delete access for test user.
     $edit = [
-      'acl[delete][add]' => $this->getAutocompleteInputString($this->testUser->getAccountName),
+      'acl[delete][add]' => $this->getAutocompleteInputString($this->testUser),
     ];
     $this->drupalGet('node/' . $this->node1->id() . '/access');
     $this->submitForm($edit, 'edit-acl-delete-add-button');
