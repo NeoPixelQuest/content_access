@@ -108,7 +108,7 @@ trait ContentAccessTestHelperTrait {
    *   The autocomplete input string.
    */
   protected function getAutocompleteInputString(EntityInterface $entity) {
-    return $entity->label() . '(' . $entity->id() . ')';
+    return $entity->label() . ' (' . $entity->id() . ')';
   }
 
 }
