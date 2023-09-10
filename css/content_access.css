@@ -4,11 +4,11 @@
  */
 
 .content_access-div {
+  float: left;
+  overflow: hidden;
   width: 25%;
   margin: 0;
   padding: 0;
-  float: left;
-  overflow: hidden;
 }
 
 .content-access-page,

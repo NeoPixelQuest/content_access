@@ -5,18 +5,18 @@
  * Content access module file.
  */
 
+use Drupal\content_access\ContentAccessInterface;
+use Drupal\Core\Cache\Cache;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Url;
+use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
 use Drupal\node\NodeTypeInterface;
-use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Cache\Cache;
-use Drupal\user\RoleInterface;
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Url;
 use Drupal\user\Entity\Role;
-use Drupal\node\Entity\Node;
-use Drupal\content_access\ContentAccessInterface;
+use Drupal\user\RoleInterface;
 
 /**
  * Implements hook_help().

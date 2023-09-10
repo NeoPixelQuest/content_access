@@ -2,11 +2,11 @@
 
 namespace Drupal\content_access\Form;
 
-use Drupal\user\Entity\Role;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Template\Attribute;
+use Drupal\user\Entity\Role;
 
 /**
  * Common components for Content Access forms.

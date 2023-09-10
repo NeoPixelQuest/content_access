@@ -2,9 +2,9 @@
 
 namespace Drupal\Tests\content_access\Functional;
 
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\node\NodeInterface;
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\user\Entity\Role;
 
 /**
@@ -99,7 +99,11 @@ trait ContentAccessTestHelperTrait {
   }
 
   /**
-   * Get the autocomplete input string that \Drupal\Core\Entity\Element\EntityAutocomplete::extractEntityIdFromAutocompleteInput expects.
+   * Get the autocomplete input string.
+   *
+   * Get the autocomplete input string that
+   * \Drupal\Core\Entity\Element\EntityAutocomplete
+   * ::extractEntityIdFromAutocompleteInput expects.
    *
    * @param \Drupal\Core\Entity\EntityInterface $entity
    *   The entity to get the autocomplete input string for.
