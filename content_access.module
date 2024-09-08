@@ -31,7 +31,7 @@ function content_access_help($route_name, RouteMatchInterface $route_match) {
         $hint_service = \Drupal::service('advanced_help_hint.gethint');
       }
       $output = '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('The <strong>Content Access</strong> module let you content manage access permission in a flexible and transparant way.') . '</p>';
+      $output .= '<p>' . t('The <strong>Content Access</strong> module lets you content manage access permission in a flexible and transparent way.') . '</p>';
       $output .= '<h3>' . t('Use') . '</h3>';
       $output .= '<p>' . t('It provides two new permissions: <em>view all</em> (allows anyone to view the content) and <em>view own</em> (allows  only the content creator to see his/her own content). It also gives access to the existing core permissions <em>edit</em> and <em>delete</em> on the same settings page.') . '</p>';
       $output .= '<p>' . t('It provides the following modalities:') . '</p><ul>';
