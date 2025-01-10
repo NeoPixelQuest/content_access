@@ -36,7 +36,7 @@ trait ContentAccessTestHelperTrait {
    * Change access permissions for a content type by a given keyword for the
    * role of the user.
    */
-  public function changeAccessContentTypeKeyword($keyword, $access = TRUE, AccountInterface $user = NULL) {
+  public function changeAccessContentTypeKeyword($keyword, $access = TRUE, ?AccountInterface $user = NULL) {
     $roles = [];
 
     if ($user === NULL) {

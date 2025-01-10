@@ -80,7 +80,7 @@ class ContentAccessPageForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, NodeInterface $node = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, ?NodeInterface $node = NULL) {
     $defaults = [];
 
     foreach (_content_access_get_operations() as $op => $label) {
@@ -173,8 +173,10 @@ class ContentAccessPageForm extends FormBase {
 
     if ($this->moduleHandler->moduleExists('acl')) {
       $values = $form_state->getValues();
-      foreach (['view', 'update', 'delete'] as $op) {
-        acl_save_form($values['acl'][$op]);
+      if (function_exists('acl_save_form')) {
+        foreach (['view', 'update', 'delete'] as $op) {
+          acl_save_form($values['acl'][$op]);
+        }
       }
       $this->moduleHandler->invokeAll('user_acl', $settings);
     }

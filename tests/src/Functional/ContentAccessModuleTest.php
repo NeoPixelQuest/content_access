@@ -2,8 +2,8 @@
 
 namespace Drupal\Tests\content_access\Functional;
 
-use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\Tests\BrowserTestBase;
+use Drupal\language\Entity\ConfigurableLanguage;
 
 /**
  * Automated BrowserTest Case for content access module.

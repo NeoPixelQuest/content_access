@@ -507,7 +507,7 @@ function content_access_get_rids_per_node_op($op, NodeInterface $node) {
  * @return array
  *   An array of role ids which have access.
  */
-function content_access_per_node_setting($op, NodeInterface $node, array $settings = NULL) {
+function content_access_per_node_setting($op, NodeInterface $node, ?array $settings = NULL) {
   static $grants = [];
 
   if (isset($settings)) {
@@ -589,7 +589,6 @@ function content_access_delete_per_node_settings(NodeInterface $node) {
 
   // Delete possible acl settings.
   if (\Drupal::moduleHandler()->moduleExists('acl')) {
-    \Drupal::modulehandler()->loadInclude('content_access', 'inc', 'content_access.admin');
     foreach (['view', 'update', 'delete'] as $op) {
       $acl_id = content_access_get_acl_id($node, $op);
       acl_delete_acl($acl_id);
@@ -693,7 +692,7 @@ function content_access_node_access_explain($row) {
   static $roles;
 
   if (!isset($roles)) {
-    $roles = user_roles();
+    $roles = Role::loadMultiple();
   }
 
   if (!$row->gid && $row->realm == 'content_access_roles') {
@@ -838,7 +837,8 @@ function content_access_user_admin_perm_submit($form, FormStateInterface $form_s
   $types = [];
   foreach (array_filter(content_access_get_settings('per_node', 'all')) as $type => $value) {
     foreach (_content_access_get_node_permissions($type) as $perm) {
-      foreach (user_roles() as $rid => $role) {
+      $user_roles = Role::loadMultiple();
+      foreach ($user_roles as $rid => $role) {
         $values = $form_state->getValues();
         if (isset($values[$rid]) && in_array($perm, $form['checkboxes'][$rid]['#default_value']) != in_array($perm, $values[$rid])) {
           // Permission changed.
